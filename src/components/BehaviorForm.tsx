@@ -151,7 +151,7 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: 8,
+          gap: 6,
         }}>
           {(Object.entries(BEHAVIOR_META) as [BehaviorType, { label: string; emoji: string }][]).map(([key, meta]) => (
             <button
@@ -160,16 +160,16 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
-                padding: '12px 14px',
+                gap: 6,
+                padding: '10px 12px',
                 border: '1.5px solid var(--color-border)',
                 borderRadius: 'var(--radius-md)',
                 background: '#fff',
                 cursor: 'pointer',
-                fontSize: 15,
+                fontSize: 14,
                 fontWeight: 500,
                 transition: 'all 0.15s',
-                minHeight: 48,
+                minHeight: 44,
               }}
             >
               <span style={{ fontSize: 22 }}>{meta.emoji}</span>
@@ -192,20 +192,20 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
           >
             ← 返回
           </button>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {SUBTYPES[behaviorType].map(s => (
               <button
                 key={s.value}
                 onClick={() => handleSubtypeSelect(s.value)}
                 style={{
-                  padding: '12px 16px',
+                  padding: '10px 14px',
                   border: '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-md)',
                   background: '#fff',
                   cursor: 'pointer',
-                  fontSize: 15,
+                  fontSize: 14,
                   textAlign: 'left',
-                  minHeight: 48,
+                  minHeight: 40,
                 }}
               >
                 {s.label}
