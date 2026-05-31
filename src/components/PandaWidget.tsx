@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import type { PandaMood } from '../types'
 import './PandaWidget.css'
 
@@ -9,36 +9,41 @@ interface Props {
 
 export function PandaWidget({ mood, outfitColor }: Props) {
   const [petting, setPetting] = useState(false)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [rotateY, setRotateY] = useState(0)
+  const [rotateX, setRotateX] = useState(0)
+  const [dragging, setDragging] = useState(false)
+  const lastX = useRef(0)
+  const lastY = useRef(0)
 
-  // 陀螺仪倾斜
-  useEffect(() => {
-    const handleOrientation = (e: DeviceOrientationEvent) => {
-      if (e.gamma !== null && e.beta !== null) {
-        // gamma: 左右 -45~45, beta: 前后 -45~45
-        const x = Math.max(-15, Math.min(15, (e.gamma || 0) * 0.4))
-        const y = Math.max(-15, Math.min(15, ((e.beta || 0) - 45) * 0.3))
-        setTilt({ x, y })
-      }
-    }
-    window.addEventListener('deviceorientation', handleOrientation)
-    return () => window.removeEventListener('deviceorientation', handleOrientation)
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    setDragging(true)
+    lastX.current = e.clientX
+    lastY.current = e.clientY
+    ;(e.target as HTMLElement).setPointerCapture?.(e.pointerId)
+    // 触摸时不触发抚摸
   }, [])
 
-  // 桌面鼠标视差
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    const cx = rect.left + rect.width / 2
-    const cy = rect.top + rect.height / 2
-    const x = ((e.clientX - cx) / rect.width) * 16
-    const y = ((e.clientY - cy) / rect.height) * 12
-    setTilt({ x, y })
-  }
-  const handleMouseLeave = () => setTilt({ x: 0, y: 0 })
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!dragging) return
+    const dx = e.clientX - lastX.current
+    const dy = e.clientY - lastY.current
+    setRotateY(prev => Math.max(-40, Math.min(40, prev + dx * 0.5)))
+    setRotateX(prev => Math.max(-25, Math.min(25, prev - dy * 0.4)))
+    lastX.current = e.clientX
+    lastY.current = e.clientY
+  }, [dragging])
 
-  const handlePet = () => {
+  const handlePointerUp = useCallback(() => {
+    setDragging(false)
+    // 如果基本没移动，视为点击（抚摸）
+    if (Math.abs(rotateY) < 3 && Math.abs(rotateX) < 3) {
+      triggerPet()
+    }
+    setRotateY(0)
+    setRotateX(0)
+  }, [rotateY, rotateX])
+
+  const triggerPet = () => {
     if (petting) return
     setPetting(true)
     setTimeout(() => setPetting(false), 800)
@@ -46,15 +51,16 @@ export function PandaWidget({ mood, outfitColor }: Props) {
 
   return (
     <div
-      ref={containerRef}
       className={`panda-container${petting ? ' petting' : ''}`}
       data-mood={mood}
+      data-dragging={dragging ? '' : undefined}
       style={{ '--outfit-color': outfitColor || undefined } as React.CSSProperties}
-      onPointerDown={handlePet}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
       role="button"
-      aria-label="抚摸泡芙"
+      aria-label="拖拽旋转泡芙"
       tabIndex={0}
     >
       {/* 漂浮特效 */}
@@ -78,8 +84,8 @@ export function PandaWidget({ mood, outfitColor }: Props) {
       <div
         className="panda-scene"
         style={{
-          transform: `rotateY(${tilt.x}deg) rotateX(${-tilt.y}deg)`,
-          transition: tilt.x === 0 && tilt.y === 0 ? 'transform 0.6s ease-out' : 'none',
+          transform: `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`,
+          transition: dragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
         {/* 尾巴 */}
