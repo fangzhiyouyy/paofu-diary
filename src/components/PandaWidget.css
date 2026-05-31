@@ -500,13 +500,30 @@
   animation: tailSlow 2.5s ease-in-out infinite alternate;
 }
 .panda-container[data-mood="sleepy"] .panda-eye {
-  height: 5px;
-  border-radius: 50%;
-  overflow: hidden;
+  width: 12px; height: 3px;
+  background: #3a2518;
+  border-radius: 2px;
+  box-shadow: none;
+  top: 46px;
 }
+.panda-container[data-mood="sleepy"] .panda-eye.left { left: 28px; }
+.panda-container[data-mood="sleepy"] .panda-eye.right { right: 28px; }
 .panda-container[data-mood="sleepy"] .panda-eye::after,
 .panda-container[data-mood="sleepy"] .panda-eye::before {
-  opacity: 0.1;
+  display: none;
+}
+.panda-container[data-mood="sad"] .panda-eye {
+  top: 46px;
+  height: 3px;
+  background: #3a2518;
+  border-radius: 2px;
+  box-shadow: none;
+}
+.panda-container[data-mood="sad"] .panda-eye.left { left: 28px; }
+.panda-container[data-mood="sad"] .panda-eye.right { right: 28px; }
+.panda-container[data-mood="sad"] .panda-eye::after,
+.panda-container[data-mood="sad"] .panda-eye::before {
+  display: none;
 }
 .panda-container[data-mood="sleepy"] .panda-head {
   animation: headNod 4s ease-in-out infinite;
