@@ -1,17 +1,18 @@
 import { create } from 'zustand'
-import type { DailyRecord, Dimensions, Behavior } from '../types'
+import type { DailyRecord, Dimensions, Behavior, CyclePhase } from '../types'
 import { DEFAULT_DIMENSIONS } from '../types'
 import { getDailyRecord, upsertDailyRecord } from '../db/dailyRepo'
 import { getBehaviors, addBehavior as dbAddBehavior, deleteBehavior as dbDelBehavior } from '../db/behaviorRepo'
 import { applyEffects, calcPandaMood, calcBehaviorEffects } from '../engine/dimensionCalc'
+import { morningRefresh } from '../engine/refreshEngine'
+import { getCurrentCycle } from '../db/cycleRepo'
+import { detectPhase, getToday } from '../engine/phaseDetector'
 
 interface DailyState {
-  // 当前日记录
   record: DailyRecord | null
   behaviors: Behavior[]
   loading: boolean
 
-  // 动作
   loadToday: (date?: string) => Promise<void>
   addBehavior: (b: Omit<Behavior, 'id' | 'date' | 'effects'> & { date?: string }) => Promise<void>
   removeBehavior: (id: string) => Promise<void>
@@ -19,6 +20,7 @@ interface DailyState {
   setOutfitColor: (hex: string, name: string) => Promise<void>
   setMenstruationLog: (log: DailyRecord['menstruation_log']) => Promise<void>
   initRecord: (record: DailyRecord) => void
+  refreshToday: (date: string) => Promise<DailyRecord>
 }
 
 export const useDailyStore = create<DailyState>((set, get) => ({
@@ -29,9 +31,13 @@ export const useDailyStore = create<DailyState>((set, get) => ({
   loadToday: async (date) => {
     set({ loading: true })
     try {
-      const today = date || new Date().toISOString().split('T')[0]
+      const today = date || getToday()
       console.log('🔍 loadToday:', today)
-      const record = await getDailyRecord(today)
+      let record = await getDailyRecord(today)
+      if (!record && today === getToday()) {
+        console.log('🌅 今天还没记录，执行晨间刷新...')
+        record = await get().refreshToday(today)
+      }
       console.log('📋 record:', record?.date || 'null')
       const behaviors = await getBehaviors(today)
       console.log('📋 behaviors:', behaviors.length)
@@ -40,6 +46,35 @@ export const useDailyStore = create<DailyState>((set, get) => ({
       console.error('❌ loadToday failed:', err)
       set({ loading: false })
     }
+  },
+
+  refreshToday: async (today) => {
+    const yd = new Date(today + 'T12:00:00')
+    yd.setDate(yd.getDate() - 1)
+    const yesterday = yd.toISOString().split('T')[0]
+    const [yesterdayRecord, yesterdayBehaviors, cycle] = await Promise.all([
+      getDailyRecord(yesterday),
+      getBehaviors(yesterday),
+      getCurrentCycle(),
+    ])
+    let cyclePhase: CyclePhase | null = null
+    if (cycle?.phases) {
+      cyclePhase = detectPhase(today, cycle.phases).phase
+    }
+    const outfitColor = yesterdayRecord?.outfit_color || null
+    const fresh = morningRefresh(yesterdayRecord, yesterdayBehaviors, cyclePhase, outfitColor)
+    const record: DailyRecord = {
+      date: today,
+      cycle_phase: cyclePhase,
+      day_of_cycle: null,
+      ...fresh,
+      outfit_color: outfitColor,
+      outfit_name: yesterdayRecord?.outfit_name || null,
+      menstruation_log: null,
+    }
+    await upsertDailyRecord(record)
+    console.log('✅ 晨间刷新完成:', record.morning_dimensions)
+    return record
   },
 
   initRecord: (record) => {
