@@ -8,7 +8,7 @@ import { TimelineCard } from '../components/TimelineCard'
 import { BehaviorForm } from '../components/BehaviorForm'
 import { PhaseBadge } from '../components/PhaseBadge'
 import { detectPhase } from '../engine/phaseDetector'
-import type { BehaviorType } from '../types'
+import type { BehaviorType, CyclePhase } from '../types'
 import { DEFAULT_DIMENSIONS } from '../types'
 
 function fmtDate(d: Date) { return d.toISOString().split('T')[0] }
@@ -40,7 +40,7 @@ export function DailyView() {
   // 根据选中日期检测阶段
   const { phase: displayPhase } = currentCycle?.phases
     ? detectPhase(selectedDate, currentCycle.phases)
-    : { phase: null, dayOfCycle: null }
+    : { phase: null as CyclePhase | null }
 
   const goDay = (delta: number) => {
     const nd = new Date(d)

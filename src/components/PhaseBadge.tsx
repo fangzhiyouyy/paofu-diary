@@ -5,7 +5,7 @@ interface Props {
   phase: CyclePhase | null
 }
 
-export function PhaseBadge({ phase, dayOfCycle }: Props) {
+export function PhaseBadge({ phase }: Props) {
   if (!phase) return null
   const meta = PHASE_META[phase]
 
