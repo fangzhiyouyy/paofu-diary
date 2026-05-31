@@ -74,7 +74,7 @@ ${buildContext(record, behaviors, phase)}`
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${API_KEY}` },
     body: JSON.stringify({
-      model: 'deepseek-chat',
+      model: 'deepseek-v4-pro',
       messages,
       temperature: 0.7,
       max_tokens: 256,
