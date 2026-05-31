@@ -73,7 +73,16 @@ ${buildContext(record, behaviors, phase)}`
   const res = await fetch(`${BASE}/chat/completions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${API_KEY}` },
-    body: JSON.stringify({ model: 'deepseek-chat', messages, temperature: 0.7, max_tokens: 256 }),
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      messages,
+      temperature: 0.7,
+      max_tokens: 256,
+      tools: [{
+        type: 'web_search',
+        web_search: { enable: true },
+      }],
+    }),
   })
 
   if (!res.ok) {
