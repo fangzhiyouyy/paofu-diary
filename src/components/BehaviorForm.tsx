@@ -94,19 +94,13 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
   return (
     <div className="slide-up" style={{
       position: 'fixed',
-      bottom: 0,
-      left: 0,
-      right: 0,
+      top: 0, left: 0, right: 0, bottom: 0,
       background: '#fff',
-      borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0',
-      boxShadow: '0 -4px 24px rgba(0,0,0,0.1)',
       zIndex: 100,
-      maxHeight: '80vh',
       display: 'flex',
       flexDirection: 'column',
-      paddingBottom: 'env(safe-area-inset-bottom)',
     }}>
-      <div style={{ flexShrink: 0, padding: '12px 16px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ flexShrink: 0, padding: 'calc(12px + env(safe-area-inset-top)) 16px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h3 style={{ fontSize: 18, fontWeight: 600 }}>
           {step === 'type' ? '选择行为类型' : step === 'subtype' ? '具体是什么？' : '添加备注'}
         </h3>
@@ -223,7 +217,7 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
       </div>
 
       {step === 'note' && (
-        <div style={{ flexShrink: 0, padding: '10px 16px' }}>
+        <div style={{ flexShrink: 0, padding: '10px 16px calc(10px + env(safe-area-inset-bottom))' }}>
           <button onClick={handleSubmit} style={{
             width: '100%', padding: '14px', border: 'none', borderRadius: 'var(--radius-md)',
             background: 'var(--phase-color, var(--panda-red))', color: '#fff', fontSize: 16, fontWeight: 600, cursor: 'pointer',
