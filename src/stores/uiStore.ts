@@ -3,7 +3,7 @@ import type { CyclePhase } from '../types'
 import { PHASE_META } from '../types'
 
 interface UIState {
-  activeTab: 'daily' | 'monthly' | 'settings'
+  activeTab: 'daily' | 'monthly' | 'chat' | 'settings'
   themeColor: string
   themeBgColor: string
   themeEmoji: string

@@ -6,6 +6,7 @@ import { DailyView } from './routes/DailyView'
 import { MonthlyView } from './routes/MonthlyView'
 import { CycleSetup } from './routes/CycleSetup'
 import { OutfitPicker } from './routes/OutfitPicker'
+import { ChatWidget } from './components/ChatWidget'
 
 function App() {
   const { activeTab, themeColor, themeBgColor } = useUIStore()
@@ -39,6 +40,9 @@ function App() {
         </div>
         <div style={{ display: activeTab === 'monthly' ? 'flex' : 'none', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
           <MonthlyView />
+        </div>
+        <div style={{ display: activeTab === 'chat' ? 'flex' : 'none', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
+          <ChatWidget />
         </div>
         <div style={{ display: activeTab === 'settings' ? 'flex' : 'none', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
           <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>

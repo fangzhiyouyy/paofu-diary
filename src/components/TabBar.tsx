@@ -3,6 +3,7 @@ import { useUIStore } from '../stores/uiStore'
 const TABS = [
   { key: 'daily' as const, label: '日记', emoji: '📅' },
   { key: 'monthly' as const, label: '月历', emoji: '📆' },
+  { key: 'chat' as const, label: '聊天', emoji: '💬' },
   { key: 'settings' as const, label: '设置', emoji: '⚙️' },
 ]
 
