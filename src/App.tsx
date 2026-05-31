@@ -15,7 +15,6 @@ function App() {
     load()
   }, [load])
 
-  // CSS 变量主题切换
   useEffect(() => {
     if (currentPhase) {
       document.documentElement.setAttribute('data-phase', currentPhase)
@@ -35,14 +34,18 @@ function App() {
         overflow: 'hidden',
         background: 'var(--color-bg)',
       }}>
-        {activeTab === 'daily' && <DailyView />}
-        {activeTab === 'monthly' && <MonthlyView />}
-        {activeTab === 'settings' && (
+        <div style={{ display: activeTab === 'daily' ? 'flex' : 'none', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
+          <DailyView />
+        </div>
+        <div style={{ display: activeTab === 'monthly' ? 'flex' : 'none', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
+          <MonthlyView />
+        </div>
+        <div style={{ display: activeTab === 'settings' ? 'flex' : 'none', flex: 1, flexDirection: 'column', overflow: 'hidden' }}>
           <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
             <OutfitPicker />
             <CycleSetup />
           </div>
-        )}
+        </div>
       </main>
       <TabBar />
     </>
