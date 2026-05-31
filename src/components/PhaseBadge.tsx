@@ -3,7 +3,6 @@ import { PHASE_META } from '../types'
 
 interface Props {
   phase: CyclePhase | null
-  dayOfCycle: number | null
 }
 
 export function PhaseBadge({ phase, dayOfCycle }: Props) {
@@ -24,7 +23,6 @@ export function PhaseBadge({ phase, dayOfCycle }: Props) {
     }}>
       <span>{meta.emoji}</span>
       <span>{meta.label}</span>
-      {dayOfCycle && <span style={{ opacity: 0.7 }}>· 第{dayOfCycle}天</span>}
     </div>
   )
 }

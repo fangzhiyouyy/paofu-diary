@@ -38,7 +38,7 @@ export function DailyView() {
   const isToday = selectedDate === fmtDate(new Date())
 
   // 根据选中日期检测阶段
-  const { phase: displayPhase, dayOfCycle: displayDay } = currentCycle?.phases
+  const { phase: displayPhase } = currentCycle?.phases
     ? detectPhase(selectedDate, currentCycle.phases)
     : { phase: null, dayOfCycle: null }
 
@@ -98,7 +98,7 @@ export function DailyView() {
             opacity: isToday ? 0.3 : 1, minWidth: 44, minHeight: 44,
           }}>▶</button>
         </div>
-        <PhaseBadge phase={displayPhase} dayOfCycle={displayDay} />
+        <PhaseBadge phase={displayPhase} />
       </div>
 
       {/* 泡芙动画 */}
