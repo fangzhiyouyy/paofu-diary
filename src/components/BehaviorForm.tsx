@@ -99,18 +99,19 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
       right: 0,
       background: '#fff',
       borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0',
-      padding: '20px 20px calc(20px + var(--safe-bottom))',
       boxShadow: '0 -4px 24px rgba(0,0,0,0.1)',
       zIndex: 100,
       maxHeight: '70vh',
-      overflow: 'auto',
+      display: 'flex',
+      flexDirection: 'column',
     }}>
-      {/* 头部 */}
+      {/* 头部 — 固定 */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 16,
+        padding: '12px 16px 8px',
+        flexShrink: 0,
       }}>
         <h3 style={{ fontSize: 18, fontWeight: 600 }}>
           {step === 'type' ? '选择行为类型' : step === 'subtype' ? '具体是什么？' : '添加备注'}
@@ -129,17 +130,21 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
       </div>
 
       {/* 当前时间 */}
-      <div style={{
-        fontSize: 13,
-        color: 'var(--color-text-light)',
-        marginBottom: 12,
-        padding: '4px 10px',
-        background: 'var(--color-bg)',
-        borderRadius: 'var(--radius-full)',
-        display: 'inline-block',
-      }}>
-        🕐 {timeStr}
+      <div style={{ padding: '0 20px 8px', flexShrink: 0 }}>
+        <div style={{
+          fontSize: 13,
+          color: 'var(--color-text-light)',
+          padding: '4px 10px',
+          background: 'var(--color-bg)',
+          borderRadius: 'var(--radius-full)',
+          display: 'inline-block',
+        }}>
+          🕐 {timeStr}
+        </div>
       </div>
+
+      {/* 可滚动内容 */}
+      <div style={{ flex: 1, overflow: 'auto', padding: '0 20px', minHeight: 0 }}>
 
       {/* 步骤 1：选择大类 */}
       {step === 'type' && (
@@ -243,11 +248,18 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
               e.currentTarget.style.borderColor = 'var(--phase-color, var(--panda-red))'
             }}
           />
+        </>
+      )}
+      </div>
+
+      {/* 提交按钮 — 固定底部 */}
+      {step === 'note' && (
+        <div style={{ padding: '8px 16px calc(8px + var(--safe-bottom))', flexShrink: 0 }}>
           <button
             onClick={handleSubmit}
             style={{
               width: '100%',
-              padding: '14px',
+              padding: '12px',
               border: 'none',
               borderRadius: 'var(--radius-md)',
               background: 'var(--phase-color, var(--panda-red))',
@@ -260,7 +272,7 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
           >
             ✅ 记录完成
           </button>
-        </>
+        </div>
       )}
     </div>
   )
