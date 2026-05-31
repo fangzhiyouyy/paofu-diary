@@ -28,10 +28,18 @@ export const useDailyStore = create<DailyState>((set, get) => ({
 
   loadToday: async (date) => {
     set({ loading: true })
-    const today = date || new Date().toISOString().split('T')[0]
-    const record = await getDailyRecord(today)
-    const behaviors = await getBehaviors(today)
-    set({ record, behaviors, loading: false })
+    try {
+      const today = date || new Date().toISOString().split('T')[0]
+      console.log('🔍 loadToday:', today)
+      const record = await getDailyRecord(today)
+      console.log('📋 record:', record?.date || 'null')
+      const behaviors = await getBehaviors(today)
+      console.log('📋 behaviors:', behaviors.length)
+      set({ record, behaviors, loading: false })
+    } catch (err) {
+      console.error('❌ loadToday failed:', err)
+      set({ loading: false })
+    }
   },
 
   initRecord: (record) => {

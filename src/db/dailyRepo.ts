@@ -8,8 +8,8 @@ export async function getDailyRecord(date?: string): Promise<DailyRecord | null>
     .from('daily_records')
     .select('*')
     .eq('date', target)
-    .single()
-  return data as DailyRecord | null
+    .maybeSingle()
+  return (data as DailyRecord) || null
 }
 
 export async function upsertDailyRecord(record: DailyRecord): Promise<void> {
