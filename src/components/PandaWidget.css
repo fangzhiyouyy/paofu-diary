@@ -4,26 +4,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0;
+  justify-content: flex-end;
   position: relative;
-  height: 340px;
+  width: 100%;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   cursor: grab;
+  overflow: visible;
 }
 .panda-container[data-dragging] {
   cursor: grabbing;
 }
-@media (max-width: 400px) {
-  .panda-container { height: 310px; }
-}
 
 .panda-scene {
   position: relative;
-  width: 240px;
-  height: 100%;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 3 / 4;
   display: flex;
   align-items: flex-end;
   justify-content: center;
