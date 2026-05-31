@@ -101,50 +101,20 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
       borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0',
       boxShadow: '0 -4px 24px rgba(0,0,0,0.1)',
       zIndex: 100,
-      maxHeight: '70vh',
+      maxHeight: '80vh',
       display: 'flex',
       flexDirection: 'column',
+      paddingBottom: 'env(safe-area-inset-bottom)',
     }}>
-      {/* 头部 — 固定 */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '12px 16px 8px',
-        flexShrink: 0,
-      }}>
+      <div style={{ flexShrink: 0, padding: '12px 16px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h3 style={{ fontSize: 18, fontWeight: 600 }}>
           {step === 'type' ? '选择行为类型' : step === 'subtype' ? '具体是什么？' : '添加备注'}
         </h3>
-        <button
-          onClick={onClose}
-          style={{
-            width: 32, height: 32,
-            border: 'none', background: 'var(--color-border)',
-            borderRadius: '50%', fontSize: 16, cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          ✕
-        </button>
+        <button onClick={onClose} style={{ width: 32, height: 32, border: 'none', background: 'var(--color-border)', borderRadius: '50%', fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
       </div>
+      <div style={{ padding: '4px 16px 8px', flexShrink: 0, fontSize: 13, color: 'var(--color-text-light)' }}>🕐 {timeStr}</div>
 
-      {/* 当前时间 */}
-      <div style={{ padding: '0 20px 8px', flexShrink: 0 }}>
-        <div style={{
-          fontSize: 13,
-          color: 'var(--color-text-light)',
-          padding: '4px 10px',
-          background: 'var(--color-bg)',
-          borderRadius: 'var(--radius-full)',
-          display: 'inline-block',
-        }}>
-          🕐 {timeStr}
-        </div>
-      </div>
-
-      {/* 可滚动内容 */}
-      <div style={{ flex: 1, overflow: 'auto', padding: '0 20px', minHeight: 0 }}>
+      <div style={{ flex: 1, overflow: 'auto', padding: '0 16px', minHeight: 0 }}>
 
       {/* 步骤 1：选择大类 */}
       {step === 'type' && (
@@ -252,26 +222,12 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
       )}
       </div>
 
-      {/* 提交按钮 — 固定底部 */}
       {step === 'note' && (
-        <div style={{ padding: '8px 16px calc(8px + var(--safe-bottom))', flexShrink: 0 }}>
-          <button
-            onClick={handleSubmit}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: 'none',
-              borderRadius: 'var(--radius-md)',
-              background: 'var(--phase-color, var(--panda-red))',
-              color: '#fff',
-              fontSize: 16,
-              fontWeight: 600,
-              cursor: 'pointer',
-              minHeight: 48,
-            }}
-          >
-            ✅ 记录完成
-          </button>
+        <div style={{ flexShrink: 0, padding: '10px 16px' }}>
+          <button onClick={handleSubmit} style={{
+            width: '100%', padding: '14px', border: 'none', borderRadius: 'var(--radius-md)',
+            background: 'var(--phase-color, var(--panda-red))', color: '#fff', fontSize: 16, fontWeight: 600, cursor: 'pointer',
+          }}>✅ 记录完成</button>
         </div>
       )}
     </div>
