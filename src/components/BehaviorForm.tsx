@@ -212,18 +212,14 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
               e.currentTarget.style.borderColor = 'var(--phase-color, var(--panda-red))'
             }}
           />
-        </>
-      )}
-      </div>
-
-      {step === 'note' && (
-        <div style={{ flexShrink: 0, padding: '10px 16px calc(10px + env(safe-area-inset-bottom))' }}>
           <button onClick={handleSubmit} style={{
             width: '100%', padding: '14px', border: 'none', borderRadius: 'var(--radius-md)',
             background: 'var(--phase-color, var(--panda-red))', color: '#fff', fontSize: 16, fontWeight: 600, cursor: 'pointer',
+            marginBottom: 16,
           }}>✅ 记录完成</button>
-        </div>
+        </>
       )}
+      </div>
     </div>
   )
 }
