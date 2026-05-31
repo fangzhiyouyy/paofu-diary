@@ -112,21 +112,19 @@ export function DailyView() {
       />
 
       {/* 泡芙寄语 */}
-      {record?.panda_quote && (
-        <div style={{
-          margin: '0 20px 16px',
-          padding: '12px 16px',
-          background: themeBgColor,
-          borderRadius: 'var(--radius-lg)',
-          fontSize: 14,
-          color: themeColor,
-          fontWeight: 500,
-          textAlign: 'center',
-          fontStyle: 'italic',
-        }}>
-          💬 泡芙说：「{record.panda_quote}」
-        </div>
-      )}
+      <div style={{
+        margin: '0 20px 16px',
+        padding: '12px 16px',
+        background: themeBgColor,
+        borderRadius: 'var(--radius-lg)',
+        fontSize: 14,
+        color: themeColor,
+        fontWeight: 500,
+        textAlign: 'center',
+        fontStyle: 'italic',
+      }}>
+        💬 泡芙说：「{record?.panda_quote || '今天也要好好爱自己哦~ 🐾'}」
+      </div>
 
       {/* 七维星盘 */}
       <div style={{

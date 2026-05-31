@@ -251,6 +251,24 @@
   z-index: 2;
   transition: background 0.4s;
 }
+.panda-outfit::before {
+  content: ''; position: absolute;
+  top: -34px; left: 16px;
+  width: 3px; height: 36px;
+  background: var(--outfit-color, #EC407A);
+  border-radius: 2px;
+  transform: rotate(-15deg);
+  z-index: 5;
+}
+.panda-outfit::after {
+  content: ''; position: absolute;
+  top: -34px; right: 16px;
+  width: 3px; height: 36px;
+  background: var(--outfit-color, #EC407A);
+  border-radius: 2px;
+  transform: rotate(15deg);
+  z-index: 5;
+}
 /* 吊带 — 左 */
 .panda-outfit::before {
   content: '';

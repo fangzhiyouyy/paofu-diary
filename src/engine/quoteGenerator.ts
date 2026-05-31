@@ -1,87 +1,86 @@
 import type { CyclePhase } from '../types'
 
-const QUOTES_BY_MOOD: Record<string, string[]> = {
-  high: [
-    '今天元气满满！泡芙准备好和你一起征服世界啦~ 🎋',
-    '状态超棒的！泡芙的尾巴都翘到天上去了~ ☀️',
-    '充满电！今天没有什么能难倒你~ ⚡',
-    '泡芙感觉今天会有好事发生！✨',
+// 7 组台词，每天一组，一周不重复
+const WEEKLY: Record<number, string[]> = {
+  0: [ // 周日 — 慵懒放松
+    '今天是泡芙的懒觉日，你也多睡会儿吧~ ☀️',
+    '周日就该慢慢来，泡芙说的！🛌',
+    '阳光、竹子、和你，完美的周日配方~ 🌿',
+    '泡芙今天决定当一只废熊，你呢？🧸',
+    '周末的最后一天，泡芙要好好珍惜和你在一起的时光~ 💕',
+    '泡芙在阳台上晒太阳，顺便想你~ ☀️',
   ],
-  good: [
-    '还不错的一天呢，泡芙在窗边晒太阳等你~ ☀️',
-    '心情晴转多云转晴～泡芙一直在这里哦 🌤️',
-    '平淡美好的一天，像竹子一样清甜~ 🎋',
-    '泡芙正在摇摆尾巴，节奏刚刚好~ 🎵',
+  1: [ // 周一 — 元气开启
+    '新的一周，泡芙已经充满电了！⚡',
+    '周一也要元气满满，泡芙陪你冲刺~ 🚀',
+    '打起精神来，这周会有好事发生！🍀',
+    '泡芙说周一的竹子特别新鲜~ 🎋',
+    '今天也要加油呀，泡芙在背后推着你~ 💪',
+    '周一不可怕，因为有泡芙呀~ 🐾',
   ],
-  neutral: [
-    '普普通通也是美好，泡芙陪你慢慢来~ 🍃',
-    '今天适合放空，泡芙帮你站岗~ 🐾',
-    '不慌不忙，泡芙泡杯茶等你~ 🍵',
-    '每一天都值得被记录，哪怕只是发呆~ 📝',
+  2: [ // 周二
+    '适应了周一的节奏，今天更从容~ ☕',
+    '泡芙的尾巴晃啊晃，今天心情不错~ 🎵',
+    '周二了，离周末又近了一天！泡芙帮你倒数~ 📅',
+    '泡芙发现今天的云很像一只小熊猫~ ☁️',
+    '慢慢进入状态，今天会是高效的一天~ ✨',
+    '泡芙在窗边唱小曲儿，等风也等你~ 🎶',
   ],
-  low: [
-    '今天好像有点低气压…泡芙把最软的肚子借你靠靠 💤',
-    '泡芙把尾巴分你一半，暖暖的~ 🧣',
-    '没关系，泡芙已经准备好热水袋了~ ♨️',
-    '今天的主题是：允许自己不完美~ 🤍',
+  3: [ // 周三
+    '一周的中间点！泡芙给你准备了竹子大餐~ 🍽️',
+    '周三啦，你已经走完一半了，真棒！👏',
+    '翻过周三这座山，后面就是下坡路~ ⛰️',
+    '泡芙掐爪一算，今天适合吃顿好的~ 🍜',
+    '加油！泡芙已经把周末安排好了（虽然还不知道去哪）🎯',
+    '今天也要做最闪亮的自己~ 💎',
   ],
-  critical: [
-    '没关系，泡芙已经把自己卷成小饭团了，随时给你充电 🍙',
-    '今天辛苦了…泡芙把所有的竹子都给你~ 🎋💚',
-    '泡芙正在用尾巴帮你挡掉全世界的烦恼~ 🛡️',
-    '不想说话也没关系，泡芙就这样静静陪着你~ 🌙',
+  4: [ // 周四
+    '周四了！泡芙已经能看到周末在招手~ 👋',
+    '胜利在望，再坚持一下下~ 🏆',
+    '泡芙说周四的夕阳特别美，记得看~ 🌅',
+    '今天适合约闺蜜出来喝杯奶茶~ 🧋',
+    '泡芙已经开始挑周末穿什么颜色的衣服了~ 👗',
+    '四舍五入就是周末了！泡芙数学满分~ 🧮',
+  ],
+  5: [ // 周五 — 期待
+    '周五啦！泡芙的尾巴甩得像直升机一样~ 🚁',
+    '今天下班后就是自由时间！泡芙已经准备好了~ 🎉',
+    '这周辛苦了，泡芙为你骄傲！🥇',
+    '最后一天冲刺，泡芙给你当啦啦队~ 📣',
+    '泡芙已经把周末的竹子都囤好了~ 🎍',
+    '今晚可以熬夜追剧，泡芙帮你放哨~ 📺',
+  ],
+  6: [ // 周六
+    '周六的早晨，泡芙选择赖床~ 😴',
+    '今天没有任何计划，就是最好的计划~ 🌈',
+    '泡芙说周六应该用来做自己喜欢的事~ 🎨',
+    '出去走走？泡芙也想呼吸新鲜空气~ 🌲',
+    '今天泡芙负责可爱，你负责开心~ 💝',
+    '周六是泡芙一周中最喜欢的日子~ 🎊',
   ],
 }
 
-const COLOR_QUOTES: Record<string, string> = {
-  '#E53935': '哇！今天火力全开~ 🔥',
-  '#FB8C00': '橘色系的你像小太阳一样温暖~ 🧡',
-  '#FDD835': '向日葵色的你！泡芙被阳光照到了~ 🌻',
-  '#EC407A': '甜甜的粉色系，泡芙也变成棉花糖啦~ 🍬',
-  '#F06292': '樱花般的颜色，泡芙要给你撒花瓣~ 🌸',
-  '#1E88E5': '像天空一样清澈的颜色呢~ ☁️',
-  '#00ACC1': '清新的薄荷感！泡芙感觉自己在海边~ 🌊',
-  '#43A047': '是竹子的颜色！泡芙最喜欢了~ 🎋',
-  '#8E24AA': '神秘又浪漫，泡芙的尾巴都在抖~ 💜',
-  '#2D2D2D': '经典永不过时，优雅满分~ 🖤',
-  '#F5F5F5': '纯白无瑕，今天的你闪闪发光~ 🤍',
+const PHASE_TAIL: Partial<Record<CyclePhase, string[]>> = {
+  menstrual:  [' 记得多喝热水 ♨️', ' 对自己温柔点 🤍', ' 泡芙懂的 🫂'],
+  follicular: [' 新阶段新气象 🌱', ' 能量回升中 ⚡', ' 好状态在路上 🛤️'],
+  ovulation:  [' 今天的你光芒四射 ✨', ' 自信最美 💋', ' 去发光吧 🌟'],
+  luteal:     [' 慢慢来 🍂', ' 接纳每一个自己 🤗', ' 泡芙陪你 🛡️'],
 }
 
-const PHASE_EXTRA: Record<CyclePhase, string> = {
-  menstrual:  ' 记得对自己温柔一点哦~ ♨️',
-  follicular: ' 新阶段新开始！🌱',
-  ovulation:  ' 今天的你格外耀眼~ ✨',
-  luteal:     ' 慢慢来，泡芙帮你守着~ 🍂',
-}
+export function generateQuote(_mood: number, phase: CyclePhase | null, _outfit: string | null): string {
+  const today = new Date()
+  const dayOfWeek = today.getDay()
+  const pool = WEEKLY[dayOfWeek] || WEEKLY[1]
+  // 用日期做种子在同组内选
+  const d = today.getDate()
+  const seed = ((d * 1103515245 + 12345) >>> 0)
+  const idx = seed % pool.length
+  let quote = pool[idx]
 
-export function generateQuote(
-  moodValue: number,
-  phase: CyclePhase | null,
-  outfitHex: string | null,
-): string {
-  let bucket: string
-  if (moodValue >= 80) bucket = 'high'
-  else if (moodValue >= 60) bucket = 'good'
-  else if (moodValue >= 40) bucket = 'neutral'
-  else if (moodValue >= 20) bucket = 'low'
-  else bucket = 'critical'
-
-  const pool = QUOTES_BY_MOOD[bucket]
-  const base = pool[Math.floor(pseudoRandom() * pool.length)]
-
-  let extra = ''
-  if (outfitHex && COLOR_QUOTES[outfitHex.toUpperCase()]) {
-    extra = ' ' + COLOR_QUOTES[outfitHex.toUpperCase()]
+  if (phase && PHASE_TAIL[phase]) {
+    const tails = PHASE_TAIL[phase]!
+    quote += tails[seed % tails.length]
   }
-  if (phase && PHASE_EXTRA[phase]) {
-    extra += PHASE_EXTRA[phase]
-  }
 
-  return base + extra
-}
-
-function pseudoRandom(): number {
-  const today = new Date().toISOString().split('T')[0]
-  const hash = today.split('').reduce((a, c) => a + c.charCodeAt(0) * 31, 0)
-  return ((hash * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff
+  return quote
 }
