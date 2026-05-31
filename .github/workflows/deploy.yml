@@ -11,19 +11,15 @@ jobs:
       contents: read
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - run: npm ci
 
-      # 注入 Supabase 环境变量到构建
       - name: Build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -37,4 +33,5 @@ jobs:
           path: dist
 
       - uses: actions/deploy-pages@v4
-        id: deployment
+        with:
+          enablement: true
