@@ -8,25 +8,45 @@ import { TimelineCard } from '../components/TimelineCard'
 import { BehaviorForm } from '../components/BehaviorForm'
 import { PhaseBadge } from '../components/PhaseBadge'
 import type { BehaviorType } from '../types'
+import { DEFAULT_DIMENSIONS } from '../types'
+
+function fmtDate(d: Date) { return d.toISOString().split('T')[0] }
 
 export function DailyView() {
   const { record, behaviors, loading, loadToday, addBehavior, removeBehavior } = useDailyStore()
   const { currentPhase, dayOfCycle } = useCycleStore()
-  const { themeColor, themeBgColor } = useUIStore()
+  const { themeColor, themeBgColor, targetDate, clearTargetDate } = useUIStore()
   const [showForm, setShowForm] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(() => fmtDate(new Date()))
+
+  // 响应月视图跳转
+  useEffect(() => {
+    if (targetDate) {
+      setSelectedDate(targetDate)
+      clearTargetDate()
+    }
+  }, [targetDate, clearTargetDate])
 
   useEffect(() => {
-    loadToday()
-  }, [loadToday])
+    loadToday(selectedDate)
+  }, [loadToday, selectedDate])
 
-  const today = new Date()
+  const d = new Date(selectedDate + 'T00:00:00')
   const weekDays = ['日', '一', '二', '三', '四', '五', '六']
-  const dateStr = `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日 星期${weekDays[today.getDay()]}`
+  const dateStr = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 星期${weekDays[d.getDay()]}`
+  const isToday = selectedDate === fmtDate(new Date())
+
+  const goDay = (delta: number) => {
+    const nd = new Date(d)
+    nd.setDate(nd.getDate() + delta)
+    setSelectedDate(fmtDate(nd))
+  }
 
   const handleAdd = async (type: BehaviorType, subtype: string, note: string) => {
     const now = new Date()
     const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
     await addBehavior({
+      date: selectedDate,
       type,
       subtype,
       time: timeStr,
@@ -57,8 +77,20 @@ export function DailyView() {
         padding: 'calc(16px + var(--safe-top)) 20px 0',
         textAlign: 'center',
       }}>
-        <div style={{ fontSize: 13, color: 'var(--color-text-light)', marginBottom: 4 }}>
-          {dateStr}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 4 }}>
+          <button onClick={() => goDay(-1)} style={{
+            border: 'none', background: 'none', fontSize: 20, cursor: 'pointer',
+            padding: '4px 8px', color: 'var(--color-text-light)', minWidth: 44, minHeight: 44,
+          }}>◀</button>
+          <div style={{ fontSize: 13, color: 'var(--color-text-light)', minWidth: 140 }}>
+            {dateStr}
+            {isToday && <span style={{ color: themeColor, fontWeight: 600, marginLeft: 4 }}>· 今天</span>}
+          </div>
+          <button onClick={() => goDay(1)} disabled={isToday} style={{
+            border: 'none', background: 'none', fontSize: 20, cursor: isToday ? 'default' : 'pointer',
+            padding: '4px 8px', color: isToday ? 'var(--color-border)' : 'var(--color-text-light)',
+            opacity: isToday ? 0.3 : 1, minWidth: 44, minHeight: 44,
+          }}>▶</button>
         </div>
         <PhaseBadge phase={currentPhase} dayOfCycle={dayOfCycle} />
       </div>
@@ -87,22 +119,20 @@ export function DailyView() {
       )}
 
       {/* 七维星盘 */}
-      {dims && (
+      <div style={{
+        margin: '0 20px 20px',
+        padding: '16px',
+        background: '#fff',
+        borderRadius: 'var(--radius-lg)',
+        boxShadow: 'var(--shadow-sm)',
+      }}>
         <div style={{
-          margin: '0 20px 20px',
-          padding: '16px',
-          background: '#fff',
-          borderRadius: 'var(--radius-lg)',
-          boxShadow: 'var(--shadow-sm)',
+          fontSize: 14, fontWeight: 600, marginBottom: 8, textAlign: 'center',
         }}>
-          <div style={{
-            fontSize: 14, fontWeight: 600, marginBottom: 8, textAlign: 'center',
-          }}>
-            🌟 七维星盘
-          </div>
-          <StarChart dimensions={dims} size={220} />
+          🌟 七维星盘
         </div>
-      )}
+        <StarChart dimensions={dims || DEFAULT_DIMENSIONS} size={220} />
+      </div>
 
       {/* 今日时间线 */}
       <div style={{ margin: '0 20px' }}>

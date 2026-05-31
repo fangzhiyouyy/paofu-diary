@@ -7,8 +7,11 @@ interface UIState {
   themeColor: string
   themeBgColor: string
   themeEmoji: string
+  targetDate: string | null
   setTab: (tab: UIState['activeTab']) => void
   setTheme: (phase: CyclePhase | null) => void
+  navigateToDate: (date: string) => void
+  clearTargetDate: () => void
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -16,6 +19,7 @@ export const useUIStore = create<UIState>((set) => ({
   themeColor: '#C75B39',
   themeBgColor: '#FFFAF5',
   themeEmoji: '🐾',
+  targetDate: null,
 
   setTab: (tab) => set({ activeTab: tab }),
 
@@ -27,4 +31,7 @@ export const useUIStore = create<UIState>((set) => ({
       set({ themeColor: '#C75B39', themeBgColor: '#FFFAF5', themeEmoji: '🐾' })
     }
   },
+
+  navigateToDate: (date) => set({ targetDate: date, activeTab: 'daily' }),
+  clearTargetDate: () => set({ targetDate: null }),
 }))

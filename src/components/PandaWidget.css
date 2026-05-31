@@ -5,18 +5,33 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 0 10px;
+  padding: 10px 0 0;
   position: relative;
+  min-height: 260px;
+  max-height: 300px;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 手机端缩放 */
+@media (max-width: 400px) {
+  .panda-container {
+    transform: scale(0.85);
+    transform-origin: center top;
+    min-height: 230px;
+  }
 }
 
 /* ====== 场景装饰 ====== */
 .panda-scene {
   position: relative;
-  width: 200px;
-  height: 240px;
+  width: 220px;
+  height: 260px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  pointer-events: none;  /* 让点击穿透到 container */
 }
 
 /* 地面竹叶 */
@@ -33,9 +48,10 @@
 /* ====== 泡芙身体 ====== */
 .panda-body {
   position: relative;
-  width: 120px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   z-index: 1;
+  margin-bottom: 10px;
 }
 
 /* 身体主体 */
@@ -301,10 +317,10 @@
 /* ====== 尾巴 ====== */
 .panda-tail {
   position: absolute;
-  bottom: 15px;
-  right: -30px;
-  width: 50px;
-  height: 70px;
+  bottom: 20px;
+  right: 15px;
+  width: 40px;
+  height: 60px;
   z-index: 0;
   transform-origin: bottom left;
 }
@@ -312,18 +328,18 @@
 .panda-tail-base {
   position: absolute;
   bottom: 0;
-  width: 50px;
-  height: 65px;
+  width: 40px;
+  height: 55px;
   background: var(--panda-red);
-  border-radius: 25px 25px 20px 20px;
+  border-radius: 20px 20px 16px 16px;
 }
 
 .panda-tail-ring {
   position: absolute;
-  width: 52px;
-  height: 14px;
+  width: 42px;
+  height: 12px;
   background: var(--panda-belly);
-  border-radius: 7px;
+  border-radius: 6px;
   left: -1px;
 }
 
@@ -457,4 +473,62 @@
 @keyframes sparkleFloat {
   0% { opacity: 1; transform: translateY(0) scale(1); }
   100% { opacity: 0; transform: translateY(-40px) scale(0.3); }
+}
+
+/* ====== 抚摸动画 ====== */
+.panda-container.petting .panda-body-main {
+  animation: petBounce 0.4s ease-in-out;
+}
+
+.panda-container.petting .panda-head {
+  animation: petNod 0.4s ease-in-out;
+}
+
+.panda-container.petting .panda-eye {
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70% !important;
+  height: 8px !important;
+}
+
+.panda-container.petting .panda-mouth-line {
+  width: 24px !important;
+  border-bottom-width: 2.5px !important;
+}
+
+.pet-effect {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 20;
+}
+
+.pet-heart {
+  position: absolute;
+  font-size: 20px;
+  animation: petHeartUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.pet-heart:nth-child(1) { left: -10px; animation-delay: 0s; }
+.pet-heart:nth-child(2) { left: 5px; animation-delay: 0.15s; }
+.pet-heart:nth-child(3) { left: 20px; animation-delay: 0.3s; }
+
+@keyframes petBounce {
+  0% { transform: translateX(-50%) translateY(0) scale(1); }
+  30% { transform: translateX(-50%) translateY(-8px) scale(1.05); }
+  60% { transform: translateX(-50%) translateY(-2px) scale(0.98); }
+  100% { transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+@keyframes petNod {
+  0% { transform: translateX(-50%) rotate(0); }
+  30% { transform: translateX(-50%) rotate(-3deg); }
+  100% { transform: translateX(-50%) rotate(0); }
+}
+
+@keyframes petHeartUp {
+  0% { opacity: 1; transform: translateY(0) scale(0.5); }
+  50% { opacity: 1; transform: translateY(-20px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(-40px) scale(0.8); }
 }

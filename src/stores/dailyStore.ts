@@ -13,7 +13,7 @@ interface DailyState {
 
   // 动作
   loadToday: (date?: string) => Promise<void>
-  addBehavior: (b: Omit<Behavior, 'id' | 'date' | 'effects'>) => Promise<void>
+  addBehavior: (b: Omit<Behavior, 'id' | 'date' | 'effects'> & { date?: string }) => Promise<void>
   removeBehavior: (id: string) => Promise<void>
   updateDimensions: (dims: Partial<Dimensions>) => void
   setOutfitColor: (hex: string, name: string) => Promise<void>
@@ -39,39 +39,50 @@ export const useDailyStore = create<DailyState>((set, get) => ({
   },
 
   addBehavior: async (b) => {
-    const { record, behaviors } = get()
-    const today = record?.date || new Date().toISOString().split('T')[0]
-    const effects = calcBehaviorEffects(b)
+    try {
+      const { record, behaviors } = get()
+      const today = b.date || record?.date || new Date().toISOString().split('T')[0]
+      const effects = calcBehaviorEffects(b)
+      console.log('🧮 effects:', effects)
 
-    const newBehavior: Behavior = {
-      ...b,
-      id: crypto.randomUUID(),
-      date: today,
-      effects,
+      const newBehavior: Behavior = {
+        ...b,
+        id: crypto.randomUUID(),
+        date: today,
+        effects,
+      }
+      console.log('📤 inserting behavior:', newBehavior)
+
+      await dbAddBehavior(newBehavior)
+      console.log('✅ behavior saved')
+
+      const newBehaviors = [...behaviors, newBehavior]
+      const currentDims = record?.current_dimensions || { ...DEFAULT_DIMENSIONS }
+      const newDims = applyEffects(currentDims, effects)
+      console.log('📊 new dimensions:', newDims)
+
+      const pandaMood = calcPandaMood(newDims)
+
+      const updatedRecord: DailyRecord = {
+        date: today,
+        cycle_phase: record?.cycle_phase || null,
+        day_of_cycle: record?.day_of_cycle || null,
+        morning_dimensions: record?.morning_dimensions || { ...DEFAULT_DIMENSIONS },
+        current_dimensions: newDims,
+        panda_mood: pandaMood,
+        panda_quote: record?.panda_quote || '',
+        outfit_color: record?.outfit_color || null,
+        outfit_name: record?.outfit_name || null,
+        menstruation_log: record?.menstruation_log || null,
+      }
+
+      await upsertDailyRecord(updatedRecord)
+      console.log('✅ daily record upserted')
+      set({ record: updatedRecord, behaviors: newBehaviors })
+    } catch (err) {
+      console.error('❌ addBehavior failed:', err)
+      alert('添加失败！请检查 Supabase 连接。\n\n' + String(err))
     }
-
-    await dbAddBehavior(newBehavior)
-    const newBehaviors = [...behaviors, newBehavior]
-
-    const currentDims = record?.current_dimensions || { ...DEFAULT_DIMENSIONS }
-    const newDims = applyEffects(currentDims, effects)
-    const pandaMood = calcPandaMood(newDims)
-
-    const updatedRecord: DailyRecord = {
-      date: today,
-      cycle_phase: record?.cycle_phase || null,
-      day_of_cycle: record?.day_of_cycle || null,
-      morning_dimensions: record?.morning_dimensions || { ...DEFAULT_DIMENSIONS },
-      current_dimensions: newDims,
-      panda_mood: pandaMood,
-      panda_quote: record?.panda_quote || '',
-      outfit_color: record?.outfit_color || null,
-      outfit_name: record?.outfit_name || null,
-      menstruation_log: record?.menstruation_log || null,
-    }
-
-    await upsertDailyRecord(updatedRecord)
-    set({ record: updatedRecord, behaviors: newBehaviors })
   },
 
   removeBehavior: async (id) => {

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { PandaMood } from '../types'
 import './PandaWidget.css'
 
@@ -7,14 +8,39 @@ interface Props {
 }
 
 export function PandaWidget({ mood, outfitColor }: Props) {
+  const [petting, setPetting] = useState(false)
+
+  const handlePet = () => {
+    if (petting) return
+    setPetting(true)
+    setTimeout(() => setPetting(false), 800)
+  }
+
   return (
-    <div className="panda-container" data-mood={mood} style={{ '--outfit-color': outfitColor || undefined } as React.CSSProperties}>
+    <div
+      className={`panda-container${petting ? ' petting' : ''}`}
+      data-mood={mood}
+      style={{ '--outfit-color': outfitColor || undefined } as React.CSSProperties}
+      onPointerDown={handlePet}
+      role="button"
+      aria-label="抚摸泡芙"
+      tabIndex={0}
+    >
       {/* 漂浮特效 */}
       {mood === 'happy' && (
         <div className="panda-sparkles">
           <span className="panda-sparkle">✨</span>
           <span className="panda-sparkle">💕</span>
           <span className="panda-sparkle">🌟</span>
+        </div>
+      )}
+
+      {/* 抚摸特效 */}
+      {petting && (
+        <div className="pet-effect">
+          <span className="pet-heart">💕</span>
+          <span className="pet-heart delay1">💕</span>
+          <span className="pet-heart delay2">💕</span>
         </div>
       )}
 

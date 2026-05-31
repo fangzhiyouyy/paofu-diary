@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useCycleStore } from '../stores/cycleStore'
+import { useUIStore } from '../stores/uiStore'
 import { getMonthRecords } from '../db/dailyRepo'
 import { PHASE_META } from '../types'
 import type { DailyRecord, CyclePhase } from '../types'
 
 export function MonthlyView() {
   const { currentCycle, load } = useCycleStore()
+  const { navigateToDate } = useUIStore()
   const [records, setRecords] = useState<DailyRecord[]>([])
   const [viewDate] = useState(() => {
     const d = new Date()
@@ -117,9 +119,11 @@ export function MonthlyView() {
               && viewDate.month === new Date().getMonth() + 1
               && viewDate.year === new Date().getFullYear()
 
+            const dateStr = `${viewDate.year}-${String(viewDate.month).padStart(2,'0')}-${String(day).padStart(2,'0')}`
             return (
-              <div
+              <button
                 key={day}
+                onClick={() => navigateToDate(dateStr)}
                 style={{
                   aspectRatio: '1',
                   display: 'flex',
@@ -133,6 +137,12 @@ export function MonthlyView() {
                   fontSize: 13,
                   fontWeight: isToday ? 700 : 500,
                   color: phaseStyle?.color || 'var(--color-text)',
+                  cursor: 'pointer',
+                  minHeight: 44,
+                  padding: 0,
+                  outline: 'none',
+                  WebkitTapHighlightColor: 'transparent',
+                  touchAction: 'manipulation',
                 }}
               >
                 {/* 泡芙迷你表情 */}
@@ -154,7 +164,7 @@ export function MonthlyView() {
                     right: 5,
                   }} />
                 )}
-              </div>
+              </button>
             )
           })}
         </div>

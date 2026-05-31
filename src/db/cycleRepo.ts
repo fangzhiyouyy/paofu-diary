@@ -31,7 +31,7 @@ export async function upsertCycle(cycle: Omit<CycleRecord, 'id'> & { id?: string
 
 // 根据历史周期数据计算平均周期长度和经期长度
 export function calcHistoryAvg(cycles: CycleRecord[]): { avgCycleLength: number; avgPeriodDuration: number } {
-  if (cycles.length === 0) return { avgCycleLength: 28, avgPeriodDuration: 5 }
+  if (cycles.length === 0) return { avgCycleLength: 30, avgPeriodDuration: 5 }
   let totalCycle = 0, totalPeriod = 0, count = 0
   for (const c of cycles) {
     if (!c.phases || c.phases.length === 0) continue
