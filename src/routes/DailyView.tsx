@@ -93,12 +93,12 @@ export function DailyView() {
             {dateStr}
             {isToday && <span style={{ color: themeColor, fontWeight: 600, marginLeft: 4 }}>· 今天</span>}
           </div>
-          <button onClick={() => goDay(1)} disabled={isToday} style={{
+          <button onClick={() => { if (!isToday) goDay(1) }} style={{
             border: 'none', background: isToday ? 'transparent' : 'var(--color-bg)', fontSize: 18,
             cursor: isToday ? 'default' : 'pointer',
             width: 44, height: 44, borderRadius: '50%',
             color: isToday ? 'var(--color-border)' : 'var(--color-text)',
-            opacity: isToday ? 0.3 : 1,
+            opacity: isToday ? 0.25 : 1,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>▶</button>
         </div>
