@@ -43,7 +43,7 @@ export function DailyView() {
     : { phase: null as CyclePhase | null }
 
   const goDay = (delta: number) => {
-    const nd = new Date(d)
+    const nd = new Date(selectedDate + 'T12:00:00')
     nd.setDate(nd.getDate() + delta)
     setSelectedDate(fmtDate(nd))
   }
