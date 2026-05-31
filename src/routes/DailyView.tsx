@@ -7,6 +7,7 @@ import { StarChart } from '../components/StarChart'
 import { TimelineCard } from '../components/TimelineCard'
 import { BehaviorForm } from '../components/BehaviorForm'
 import { PhaseBadge } from '../components/PhaseBadge'
+import { detectPhase } from '../engine/phaseDetector'
 import type { BehaviorType } from '../types'
 import { DEFAULT_DIMENSIONS } from '../types'
 
@@ -14,7 +15,7 @@ function fmtDate(d: Date) { return d.toISOString().split('T')[0] }
 
 export function DailyView() {
   const { record, behaviors, loading, loadToday, addBehavior, removeBehavior } = useDailyStore()
-  const { currentPhase, dayOfCycle } = useCycleStore()
+  const { currentCycle } = useCycleStore()
   const { themeColor, themeBgColor, targetDate, clearTargetDate } = useUIStore()
   const [showForm, setShowForm] = useState(false)
   const [selectedDate, setSelectedDate] = useState(() => fmtDate(new Date()))
@@ -35,6 +36,11 @@ export function DailyView() {
   const weekDays = ['日', '一', '二', '三', '四', '五', '六']
   const dateStr = `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 星期${weekDays[d.getDay()]}`
   const isToday = selectedDate === fmtDate(new Date())
+
+  // 根据选中日期检测阶段
+  const { phase: displayPhase, dayOfCycle: displayDay } = currentCycle?.phases
+    ? detectPhase(selectedDate, currentCycle.phases)
+    : { phase: null, dayOfCycle: null }
 
   const goDay = (delta: number) => {
     const nd = new Date(d)
@@ -92,7 +98,7 @@ export function DailyView() {
             opacity: isToday ? 0.3 : 1, minWidth: 44, minHeight: 44,
           }}>▶</button>
         </div>
-        <PhaseBadge phase={currentPhase} dayOfCycle={dayOfCycle} />
+        <PhaseBadge phase={displayPhase} dayOfCycle={displayDay} />
       </div>
 
       {/* 泡芙动画 */}
