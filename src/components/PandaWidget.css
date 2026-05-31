@@ -209,7 +209,7 @@
 }
 .panda-eye {
   position: absolute;
-  top: 38px;
+  top: 40px;
   width: 18px;
   height: 20px;
   background: radial-gradient(circle at 42% 38%, #444 0%, #0a0a0a 100%);
@@ -504,7 +504,7 @@
   background: #3a2518;
   border-radius: 2px;
   box-shadow: none;
-  top: 46px;
+  top: 48px;
 }
 .panda-container[data-mood="sleepy"] .panda-eye.left { left: 28px; }
 .panda-container[data-mood="sleepy"] .panda-eye.right { right: 28px; }
@@ -513,7 +513,7 @@
   display: none;
 }
 .panda-container[data-mood="sad"] .panda-eye {
-  top: 46px;
+  top: 48px;
   height: 3px;
   background: #3a2518;
   border-radius: 2px;
@@ -555,7 +555,8 @@
 }
 .panda-container.petting .panda-eye {
   border-radius: 50% 50% 50% 50% / 20% 20% 80% 80% !important;
-  height: 6px !important;
+  height: 4px !important;
+  top: 48px !important;
 }
 .panda-container.petting .panda-mouth-line {
   width: 28px !important;
