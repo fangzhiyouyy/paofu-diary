@@ -11,17 +11,19 @@
   -webkit-user-select: none;
   cursor: grab;
 }
-.panda-container[data-dragging] { cursor: grabbing; }
+.panda-container[data-dragging] {
+  cursor: grabbing;
+}
 
 /* 场景：相对定位，居中 */
 .panda-scene {
   position: relative;
   width: 200px;
-  padding: 0 50px 20px 0;
+  padding: 0 0 20px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  filter: drop-shadow(0 4px 10px rgba(74,55,40,0.1));
+  filter: drop-shadow(0 4px 10px rgba(74, 55, 40, 0.1));
   perspective: 500px;
   transform-style: preserve-3d;
 }
@@ -29,34 +31,52 @@
 /* ====== 头部 ====== */
 .panda-head {
   position: relative;
-  width: 120px; height: 106px;
+  width: 120px;
+  height: 106px;
   flex-shrink: 0;
   z-index: 5;
   overflow: visible;
 }
 .panda-face {
-  width: 120px; height: 106px;
-  background: linear-gradient(170deg, #E88460 0%, #D4693E 25%, #C75B39 55%, #B84E2E 100%);
+  width: 120px;
+  height: 106px;
+  background: linear-gradient(
+    170deg,
+    #e88460 0%,
+    #d4693e 25%,
+    #c75b39 55%,
+    #b84e2e 100%
+  );
   border-radius: 62px 62px 50px 50px;
-  box-shadow: inset 0 7px 14px rgba(255,255,255,0.08), inset 0 -5px 10px rgba(0,0,0,0.06);
+  box-shadow: inset 0 7px 14px rgba(255, 255, 255, 0.08),
+    inset 0 -5px 10px rgba(0, 0, 0, 0.06);
 }
 .panda-ear {
   position: absolute;
   top: 4px;
-  width: 34px; height: 36px;
-  background: linear-gradient(180deg, #5D3A1A 0%, #4A2518 100%);
+  width: 34px;
+  height: 36px;
+  background: linear-gradient(180deg, #5d3a1a 0%, #4a2518 100%);
   border-radius: 50% 50% 28% 28%;
   z-index: -1;
 }
 .panda-ear::after {
-  content: ''; position: absolute;
-  top: 6px; left: 50%; transform: translateX(-50%);
-  width: 18px; height: 20px;
-  background: radial-gradient(ellipse at 50% 60%, #FFFDF5 0%, #F0E0C8 100%);
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 20px;
+  background: radial-gradient(ellipse at 50% 60%, #fffdf5 0%, #f0e0c8 100%);
   border-radius: 50%;
 }
-.panda-ear.left { left: 0; }
-.panda-ear.right { right: 0; }
+.panda-ear.left {
+  left: 0;
+}
+.panda-ear.right {
+  right: 0;
+}
 
 /* ====== 头顶蝴蝶结 ====== */
 .head-bow {
@@ -65,323 +85,620 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
 }
 /* 左翼 */
 .head-bow::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -22px;
-  width: 22px; height: 20px;
-  background: linear-gradient(160deg,
-    rgba(255,255,255,0.3) 0%,
-    var(--outfit-color, #EC407A) 25%,
-    color-mix(in srgb, var(--outfit-color, #EC407A) 75%, #000) 100%);
+  width: 22px;
+  height: 20px;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    var(--outfit-color, #ec407a) 25%,
+    color-mix(in srgb, var(--outfit-color, #ec407a) 75%, #000) 100%
+  );
   border-radius: 50% 20% 60% 40%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15), inset 0 2px 4px rgba(255,255,255,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
   transform: rotate(-15deg);
 }
 /* 右翼 */
 .head-bow::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 22px; height: 20px;
-  background: linear-gradient(200deg,
-    rgba(255,255,255,0.3) 0%,
-    var(--outfit-color, #EC407A) 25%,
-    color-mix(in srgb, var(--outfit-color, #EC407A) 75%, #000) 100%);
+  width: 22px;
+  height: 20px;
+  background: linear-gradient(
+    200deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    var(--outfit-color, #ec407a) 25%,
+    color-mix(in srgb, var(--outfit-color, #ec407a) 75%, #000) 100%
+  );
   border-radius: 20% 50% 40% 60%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15), inset 0 2px 4px rgba(255,255,255,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
   transform: rotate(15deg);
 }
 /* 中心结 */
 .head-bow-dot {
   position: absolute;
-  top: 2px; left: 50%;
+  top: 2px;
+  left: 50%;
   transform: translateX(-50%);
-  width: 10px; height: 10px;
-  background: radial-gradient(circle at 40% 35%, #fff 0%, var(--outfit-color, #EC407A) 40%, color-mix(in srgb, var(--outfit-color, #EC407A) 60%, #000) 100%);
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(
+    circle at 40% 35%,
+    #fff 0%,
+    var(--outfit-color, #ec407a) 40%,
+    color-mix(in srgb, var(--outfit-color, #ec407a) 60%, #000) 100%
+  );
   border-radius: 50%;
   z-index: 2;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 /* 飘带 */
 .head-bow-ribbon {
   position: absolute;
-  top: 8px; left: 50%;
+  top: 8px;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 1;
 }
 .head-bow-ribbon::before,
 .head-bow-ribbon::after {
-  content: '';
+  content: "";
   position: absolute;
-  width: 8px; height: 18px;
-  background: linear-gradient(180deg,
-    var(--outfit-color, #EC407A) 0%,
-    color-mix(in srgb, var(--outfit-color, #EC407A) 70%, #000) 100%);
+  width: 8px;
+  height: 18px;
+  background: linear-gradient(
+    180deg,
+    var(--outfit-color, #ec407a) 0%,
+    color-mix(in srgb, var(--outfit-color, #ec407a) 70%, #000) 100%
+  );
   border-radius: 2px 2px 6px 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-.head-bow-ribbon::before { left: -10px; transform: rotate(10deg); }
-.head-bow-ribbon::after { left: 2px; transform: rotate(-10deg); }
+.head-bow-ribbon::before {
+  left: -10px;
+  transform: rotate(10deg);
+}
+.head-bow-ribbon::after {
+  left: 2px;
+  transform: rotate(-10deg);
+}
 
 .panda-face-white {
   position: absolute;
-  top: 36px; left: 50%; transform: translateX(-50%);
-  width: 88px; height: 56px;
-  background: radial-gradient(ellipse at 50% 35%, #FFFDF8 0%, #F5E1C8 45%, #E5CDA8 100%);
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88px;
+  height: 56px;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    #fffdf8 0%,
+    #f5e1c8 45%,
+    #e5cda8 100%
+  );
   border-radius: 44px 44px 38px 38px;
-  box-shadow: inset 0 3px 8px rgba(255,255,255,0.5);
+  box-shadow: inset 0 3px 8px rgba(255, 255, 255, 0.5);
 }
 .panda-eye-patch {
   position: absolute;
   top: 34px;
-  width: 28px; height: 32px;
-  background: linear-gradient(180deg, #5D3A1A 0%, #3D1E10 100%);
+  width: 28px;
+  height: 32px;
+  background: linear-gradient(180deg, #5d3a1a 0%, #3d1e10 100%);
   border-radius: 48% 48% 40% 40%;
 }
-.panda-eye-patch.left { left: 20px; transform: rotate(-7deg); }
-.panda-eye-patch.right { right: 20px; transform: rotate(7deg); }
+.panda-eye-patch.left {
+  left: 20px;
+  transform: rotate(-7deg);
+}
+.panda-eye-patch.right {
+  right: 20px;
+  transform: rotate(7deg);
+}
 .panda-eye {
   position: absolute;
   top: 38px;
-  width: 18px; height: 20px;
-  background: radial-gradient(circle at 42% 38%, #444 0%, #0A0A0A 100%);
+  width: 18px;
+  height: 20px;
+  background: radial-gradient(circle at 42% 38%, #444 0%, #0a0a0a 100%);
   border-radius: 50%;
   z-index: 2;
 }
 .panda-eye::after {
-  content: ''; position: absolute;
-  top: 3px; left: 5px;
-  width: 7px; height: 7px;
-  background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.7) 100%);
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  width: 7px;
+  height: 7px;
+  background: radial-gradient(circle, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
   border-radius: 50%;
 }
 .panda-eye::before {
-  content: ''; position: absolute;
-  top: 7px; left: 10px;
-  width: 3px; height: 3px;
-  background: #fff; border-radius: 50%; opacity: 0.7;
+  content: "";
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  width: 3px;
+  height: 3px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.7;
 }
-.panda-eye.left { left: 25px; }
-.panda-eye.right { right: 25px; }
+.panda-eye.left {
+  left: 25px;
+}
+.panda-eye.right {
+  right: 25px;
+}
 .panda-eyebrow {
   position: absolute;
   top: 35px;
-  width: 8px; height: 5px;
-  background: rgba(255,255,255,0.5);
+  width: 8px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   z-index: 2;
 }
-.panda-eyebrow.left { left: 28px; }
-.panda-eyebrow.right { right: 28px; }
+.panda-eyebrow.left {
+  left: 28px;
+}
+.panda-eyebrow.right {
+  right: 28px;
+}
 .panda-nose {
   position: absolute;
-  top: 56px; left: 50%; transform: translateX(-50%);
-  width: 16px; height: 10px;
-  background: radial-gradient(ellipse at 50% 30%, #444 0%, #1A100C 100%);
+  top: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 10px;
+  background: radial-gradient(ellipse at 50% 30%, #444 0%, #1a100c 100%);
   border-radius: 50%;
   z-index: 2;
 }
 .panda-mouth {
   position: absolute;
-  top: 63px; left: 50%; transform: translateX(-50%);
+  top: 63px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
 }
 .panda-mouth-line {
-  width: 24px; height: 10px;
-  border-bottom: 2px solid #4A2518;
+  width: 24px;
+  height: 10px;
+  border-bottom: 2px solid #4a2518;
   border-radius: 0 0 50% 50%;
 }
 .panda-blush {
   position: absolute;
   top: 58px;
-  width: 16px; height: 11px;
-  background: radial-gradient(ellipse, rgba(255,160,140,0.45) 0%, transparent 75%);
+  width: 16px;
+  height: 11px;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 160, 140, 0.45) 0%,
+    transparent 75%
+  );
   border-radius: 50%;
   z-index: 1;
 }
-.panda-blush.left { left: 10px; }
-.panda-blush.right { right: 10px; }
+.panda-blush.left {
+  left: 10px;
+}
+.panda-blush.right {
+  right: 10px;
+}
 
 /* ====== 身体（在头部下方，margin-top 负值产生重叠） ====== */
 .panda-body {
   position: relative;
-  width: 82px; height: 80px;
-  margin-top: -18px;
+  width: 70px;
+  height: 72px;
+  margin-top: -16px;
   z-index: 3;
   flex-shrink: 0;
 }
 .panda-body-main {
-  width: 82px; height: 72px;
-  background: linear-gradient(180deg, #D9734A 0%, #C75B39 40%, #A84428 100%);
+  width: 70px;
+  height: 64px;
+  background: linear-gradient(180deg, #d9734a 0%, #c75b39 40%, #a84428 100%);
   border-radius: 42px 42px 30px 32px;
-  box-shadow:
-    inset 0 5px 10px rgba(255,255,255,0.1),
-    inset 0 -6px 12px rgba(0,0,0,0.08),
-    0 3px 6px rgba(0,0,0,0.06);
+  box-shadow: inset 0 5px 10px rgba(255, 255, 255, 0.1),
+    inset 0 -6px 12px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.06);
   animation: breathe 3s ease-in-out infinite;
   position: relative;
 }
 .panda-belly {
   position: absolute;
-  bottom: 5px; left: 50%; transform: translateX(-50%);
-  width: 46px; height: 40px;
-  background: radial-gradient(ellipse at 50% 30%, #FFFBF5 0%, #F5E1C8 55%, #E5CDA8 100%);
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38px;
+  height: 34px;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    #fffbf5 0%,
+    #f5e1c8 55%,
+    #e5cda8 100%
+  );
   border-radius: 50%;
-  box-shadow: inset 0 2px 6px rgba(255,255,255,0.5);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.5);
 }
 /* 连衣裙 */
 .panda-outfit {
   position: absolute;
-  bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 86px; height: 40px;
-  background: linear-gradient(180deg,
-    rgba(255,255,255,0.2) 0%,
-    var(--outfit-color, #EC407A) 10%,
-    color-mix(in srgb, var(--outfit-color, #EC407A) 85%, #111) 100%);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 74px;
+  height: 36px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    var(--outfit-color, #ec407a) 10%,
+    color-mix(in srgb, var(--outfit-color, #ec407a) 85%, #111) 100%
+  );
   border-radius: 34px 34px 16px 16px;
-  box-shadow:
-    inset 0 3px 6px rgba(255,255,255,0.12),
-    0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.12),
+    0 1px 3px rgba(0, 0, 0, 0.06);
   z-index: 2;
   transition: background 0.4s;
 }
 .panda-outfit::before {
-  content: ''; position: absolute;
-  top: -34px; left: 16px;
-  width: 3px; height: 36px;
-  background: var(--outfit-color, #EC407A);
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 13px;
+  width: 4px;
+  height: 50px;
+  background: var(--outfit-color, #ec407a);
   border-radius: 2px;
-  transform: rotate(-15deg);
-  z-index: 5;
+  transform: rotate(-16deg);
+  z-index: 10;
 }
 .panda-outfit::after {
-  content: ''; position: absolute;
-  top: -34px; right: 16px;
-  width: 3px; height: 36px;
-  background: var(--outfit-color, #EC407A);
-  border-radius: 2px;
-  transform: rotate(15deg);
-  z-index: 5;
-}
-/* 吊带 — 左 */
-.panda-outfit::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: -28px; left: 8px;
-  width: 2.5px; height: 30px;
-  background: var(--outfit-color, #EC407A);
+  top: -40px;
+  right: 13px;
+  width: 4px;
+  height: 50px;
+  background: var(--outfit-color, #ec407a);
   border-radius: 2px;
-  opacity: 0.75;
-  transform: rotate(-6deg);
-  transform-origin: bottom center;
-}
-/* 吊带 — 右 */
-.panda-outfit::after {
-  content: '';
-  position: absolute;
-  top: -28px; right: 8px;
-  width: 2.5px; height: 30px;
-  background: var(--outfit-color, #EC407A);
-  border-radius: 2px;
-  opacity: 0.75;
-  transform: rotate(6deg);
-  transform-origin: bottom center;
+  transform: rotate(16deg);
+  z-index: 10;
 }
 .panda-paw {
   position: absolute;
-  bottom: 24px;
-  width: 20px; height: 16px;
-  background: linear-gradient(180deg, #5D3A1A 0%, #4A2518 100%);
+  bottom: 22px;
+  width: 18px;
+  height: 15px;
+  background: linear-gradient(180deg, #4a2518 0%, #3a1a10 100%);
   border-radius: 50%;
   z-index: 4;
 }
-.panda-paw.left { left: 14px; }
-.panda-paw.right { right: 14px; }
+.panda-paw.left {
+  left: 14px;
+}
+.panda-paw.right {
+  right: 14px;
+}
 
 /* ====== 尾巴 ====== */
 .panda-tail {
   position: absolute;
-  right: 2px;
-  bottom: 40px;
-  width: 48px; height: 80px;
-  z-index: 0;
-  transform-origin: bottom center;
+  left: 36px;
+  bottom: 48px;
+  width: 54px;
+  height: 12px;
+  z-index: 4;
+  transform-origin: right center;
+  transform: rotate(-35deg);
 }
 .panda-tail-base {
-  width: 48px; height: 76px;
-  background: linear-gradient(180deg, #E07850 0%, #C75B39 30%, #B84E2E 100%);
-  border-radius: 26px 26px 20px 20px;
-  box-shadow: inset 0 3px 8px rgba(255,255,255,0.12), 0 2px 4px rgba(0,0,0,0.08);
+  width: 54px;
+  height: 16px;
+  background: linear-gradient(90deg, #b84e2e 0%, #c75b39 40%, #d9734a 100%);
+  border-radius: 9px 10px 10px 9px;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.08);
   position: relative;
 }
 .panda-tail-ring {
   position: absolute;
-  width: 50px; height: 14px;
-  background: linear-gradient(180deg, #F5E3D0 0%, #E8D0B0 100%);
-  border-radius: 8px; left: -1px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  width: 12px;
+  height: 18px;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 227, 208, 0.7) 0%,
+    rgba(232, 208, 176, 0.9) 50%,
+    rgba(245, 227, 208, 0.7) 100%
+  );
+  border-radius: 6px;
+  top: -1px;
 }
-.panda-tail-ring:nth-child(2) { top: 10px; }
-.panda-tail-ring:nth-child(3) { top: 30px; }
-.panda-tail-ring:nth-child(4) { top: 50px; }
+.panda-tail-ring:nth-child(2) {
+  left: 12px;
+}
+.panda-tail-ring:nth-child(3) {
+  left: 32px;
+}
+.panda-tail-ring:nth-child(4) {
+  left: 52px;
+}
 
-/* 地面阴影 */
+/* 地面阴影 + 脚印 */
 .panda-ground {
-  width: 90px; height: 14px;
+  width: 90px;
+  height: 20px;
   flex-shrink: 0;
-  background: radial-gradient(ellipse, rgba(107,142,35,0.15) 0%, transparent 70%);
-  border-radius: 50%;
+  position: relative;
   margin-top: -8px;
+}
+.panda-ground::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 12px;
+  background: radial-gradient(
+    ellipse,
+    rgba(107, 142, 35, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+}
+/* 左脚印 */
+.paw-print {
+  position: absolute;
+  top: 2px;
+  font-size: 12px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+.paw-print.left {
+  left: 18px;
+}
+.paw-print.right {
+  right: 18px;
 }
 
 /* ====== 表情状态 ====== */
-.panda-container[data-mood="happy"] .panda-tail { animation: tailWag 0.5s ease-in-out infinite alternate; }
-.panda-container[data-mood="happy"] .panda-eye { height: 15px; border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%; }
-.panda-container[data-mood="happy"] .panda-mouth-line { width: 30px; height: 13px; border-bottom-width: 2.5px; }
-.panda-container[data-mood="energetic"] .panda-paw { animation: pawBounce 0.7s ease-in-out infinite alternate; }
-.panda-container[data-mood="energetic"] .panda-eye { height: 20px; }
-.panda-container[data-mood="neutral"] .panda-tail { animation: tailSlow 2.5s ease-in-out infinite alternate; }
-.panda-container[data-mood="sleepy"] .panda-eye { height: 5px; border-radius: 50%; overflow: hidden; }
+.panda-container[data-mood="happy"] .panda-tail {
+  animation: tailWag 0.5s ease-in-out infinite alternate;
+}
+.panda-container[data-mood="happy"] .panda-eye {
+  height: 15px;
+  border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+}
+.panda-container[data-mood="happy"] .panda-mouth-line {
+  width: 30px;
+  height: 13px;
+  border-bottom-width: 2.5px;
+}
+.panda-container[data-mood="energetic"] .panda-paw {
+  animation: pawBounce 0.7s ease-in-out infinite alternate;
+}
+.panda-container[data-mood="energetic"] .panda-eye {
+  height: 20px;
+}
+.panda-container[data-mood="neutral"] .panda-tail {
+  animation: tailSlow 2.5s ease-in-out infinite alternate;
+}
+.panda-container[data-mood="sleepy"] .panda-eye {
+  height: 5px;
+  border-radius: 50%;
+  overflow: hidden;
+}
 .panda-container[data-mood="sleepy"] .panda-eye::after,
-.panda-container[data-mood="sleepy"] .panda-eye::before { opacity: 0.1; }
-.panda-container[data-mood="sleepy"] .panda-head { animation: headNod 4s ease-in-out infinite; }
-.panda-container[data-mood="sad"] .panda-mouth-line { width: 14px; border-top: 2px solid #4A2518; border-bottom: none; border-radius: 50% 50% 0 0; }
-.panda-container[data-mood="sad"] .panda-blush { opacity: 0.25; }
-.panda-container[data-mood="stressed"] .panda-body-main { animation: bodyShake 0.22s ease-in-out infinite; }
-.panda-container[data-mood="stressed"] .panda-eye { width: 20px; height: 20px; background: radial-gradient(circle, #FF6B6B 35%, #0A0A0A 70%); }
+.panda-container[data-mood="sleepy"] .panda-eye::before {
+  opacity: 0.1;
+}
+.panda-container[data-mood="sleepy"] .panda-head {
+  animation: headNod 4s ease-in-out infinite;
+}
+.panda-container[data-mood="sad"] .panda-mouth-line {
+  width: 14px;
+  border-top: 2px solid #4a2518;
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+}
+.panda-container[data-mood="sad"] .panda-blush {
+  opacity: 0.25;
+}
+.panda-container[data-mood="stressed"] .panda-body-main {
+  animation: bodyShake 0.22s ease-in-out infinite;
+}
+.panda-container[data-mood="stressed"] .panda-eye {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #ff6b6b 35%, #0a0a0a 70%);
+}
 
 /* 抚摸 */
-.panda-container.petting .panda-body-main { animation: petBounce 0.4s ease-in-out; }
-.panda-container.petting .panda-head { animation: petNod 0.4s ease-in-out; }
-.panda-container.petting .panda-eye { border-radius: 50% 50% 50% 50% / 20% 20% 80% 80% !important; height: 6px !important; }
-.panda-container.petting .panda-mouth-line { width: 28px !important; border-bottom-width: 3px !important; }
+.panda-container.petting .panda-body-main {
+  animation: petBounce 0.4s ease-in-out;
+}
+.panda-container.petting .panda-head {
+  animation: petNod 0.4s ease-in-out;
+}
+.panda-container.petting .panda-eye {
+  border-radius: 50% 50% 50% 50% / 20% 20% 80% 80% !important;
+  height: 6px !important;
+}
+.panda-container.petting .panda-mouth-line {
+  width: 28px !important;
+  border-bottom-width: 3px !important;
+}
 
-.pet-effect { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 20; }
-.pet-heart { position: absolute; font-size: 24px; animation: petHeartUp 0.8s ease-out forwards; opacity: 0; }
-.pet-heart:nth-child(1) { left: -22px; }
-.pet-heart:nth-child(2) { left: 0; animation-delay: 0.1s; }
-.pet-heart:nth-child(3) { left: 22px; animation-delay: 0.2s; }
+.pet-effect {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 20;
+}
+.pet-heart {
+  position: absolute;
+  font-size: 24px;
+  animation: petHeartUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+.pet-heart:nth-child(1) {
+  left: -22px;
+}
+.pet-heart:nth-child(2) {
+  left: 0;
+  animation-delay: 0.1s;
+}
+.pet-heart:nth-child(3) {
+  left: 22px;
+  animation-delay: 0.2s;
+}
 
-.panda-sparkles { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); pointer-events: none; }
-.panda-container[data-mood="happy"] .panda-sparkle { position: absolute; font-size: 18px; animation: sparkleFloat 1.6s ease-out infinite; }
-.panda-sparkle:nth-child(1) { left: -40px; }
-.panda-sparkle:nth-child(2) { right: -35px; animation-delay: 0.5s; }
-.panda-sparkle:nth-child(3) { left: -5px; animation-delay: 1s; }
+.panda-sparkles {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.panda-container[data-mood="happy"] .panda-sparkle {
+  position: absolute;
+  font-size: 18px;
+  animation: sparkleFloat 1.6s ease-out infinite;
+}
+.panda-sparkle:nth-child(1) {
+  left: -40px;
+}
+.panda-sparkle:nth-child(2) {
+  right: -35px;
+  animation-delay: 0.5s;
+}
+.panda-sparkle:nth-child(3) {
+  left: -5px;
+  animation-delay: 1s;
+}
 
 /* ====== 动画关键帧 ====== */
-@keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.015); } }
-@keyframes tailWag { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
-@keyframes tailSlow { from { transform: rotate(-5deg); } to { transform: rotate(8deg); } }
-@keyframes pawBounce { from { transform: translateY(0); } to { transform: translateY(-6px); } }
-@keyframes headNod { 0%,100% { transform: rotate(0); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-2deg); } }
-@keyframes bodyShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
-@keyframes petBounce { 0% { transform: translateY(0) scale(1); } 30% { transform: translateY(-10px) scale(1.05); } 60% { transform: translateY(-2px) scale(0.97); } 100% { transform: translateY(0) scale(1); } }
-@keyframes petNod { 0% { transform: rotate(0); } 30% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
-@keyframes petHeartUp { 0% { opacity: 1; transform: translateY(0) scale(0.3); } 50% { opacity: 1; transform: translateY(-28px) scale(1.4); } 100% { opacity: 0; transform: translateY(-55px) scale(0.5); } }
-@keyframes sparkleFloat { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-50px) scale(0.2); } }
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.015);
+  }
+}
+@keyframes tailWag {
+  from {
+    transform: rotate(-16deg);
+  }
+  to {
+    transform: rotate(16deg);
+  }
+}
+@keyframes tailSlow {
+  from {
+    transform: rotate(-5deg);
+  }
+  to {
+    transform: rotate(8deg);
+  }
+}
+@keyframes pawBounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+@keyframes headNod {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-2deg);
+  }
+}
+@keyframes bodyShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+@keyframes petBounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-10px) scale(1.05);
+  }
+  60% {
+    transform: translateY(-2px) scale(0.97);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes petNod {
+  0% {
+    transform: rotate(0);
+  }
+  30% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+@keyframes petHeartUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-28px) scale(1.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-55px) scale(0.5);
+  }
+}
+@keyframes sparkleFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.2);
+  }
+}

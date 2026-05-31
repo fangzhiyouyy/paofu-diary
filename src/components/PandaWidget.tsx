@@ -137,7 +137,10 @@ export function PandaWidget({ mood, outfitColor }: Props) {
         </div>
 
         {/* 地面阴影 */}
-        <div className="panda-ground" />
+        <div className="panda-ground">
+          <span className="paw-print left">🐾</span>
+          <span className="paw-print right">🐾</span>
+        </div>
       </div>
     </div>
   )
