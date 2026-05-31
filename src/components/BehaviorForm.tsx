@@ -165,13 +165,6 @@ export function BehaviorForm({ onAdd, onClose }: Props) {
                 transition: 'all 0.15s',
                 minHeight: 48,
               }}
-              onPointerDown={e => {
-                e.currentTarget.style.background = 'var(--color-bg)'
-                e.currentTarget.style.borderColor = 'var(--phase-color, var(--panda-red))'
-              }}
-              onPointerUp={e => {
-                e.currentTarget.style.background = '#fff'
-              }}
             >
               <span style={{ fontSize: 22 }}>{meta.emoji}</span>
               {meta.label}

@@ -196,8 +196,10 @@ export function DailyView() {
           transition: 'transform 0.2s',
           WebkitTapHighlightColor: 'transparent',
         }}
-        onPointerDown={e => { e.currentTarget.style.transform = 'scale(0.9)' }}
-        onPointerUp={e => { e.currentTarget.style.transform = 'scale(1)' }}
+        onTouchStart={e => { e.currentTarget.style.transform = 'scale(0.9)' }}
+        onTouchEnd={e => { e.currentTarget.style.transform = 'scale(1)' }}
+        onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.9)' }}
+        onMouseUp={e => { e.currentTarget.style.transform = 'scale(1)' }}
       >
         +
       </button>
