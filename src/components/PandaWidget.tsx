@@ -83,6 +83,8 @@ export function PandaWidget({ mood, outfitColor }: Props) {
               <div className="panda-eye-patch right" />
               <div className="panda-eye left" />
               <div className="panda-eye right" />
+              <div className="panda-blush left" />
+              <div className="panda-blush right" />
               <div className="panda-nose" />
               <div className="panda-mouth">
                 <div className="panda-mouth-line" />

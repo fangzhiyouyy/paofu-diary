@@ -1,29 +1,29 @@
-/* ====== 泡芙 · 纯 CSS 红熊猫 ====== */
+/* ====== 泡芙 · 立体红熊猫 CSS ====== */
 
 .panda-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 0 0;
+  padding: 16px 0 0;
   position: relative;
-  min-height: 260px;
-  max-height: 300px;
+  min-height: 280px;
+  max-height: 320px;
   touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
+  cursor: pointer;
 }
 
-/* 手机端缩放 */
+/* 手机缩放 */
 @media (max-width: 400px) {
   .panda-container {
-    transform: scale(0.85);
+    transform: scale(0.88);
     transform-origin: center top;
-    min-height: 230px;
+    min-height: 250px;
   }
 }
 
-/* ====== 场景装饰 ====== */
 .panda-scene {
   position: relative;
   width: 220px;
@@ -31,51 +31,86 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  pointer-events: none;  /* 让点击穿透到 container */
+  pointer-events: none;
+  filter: drop-shadow(0 8px 16px rgba(74, 55, 40, 0.15));
 }
 
-/* 地面竹叶 */
+/* ====== 阴影底座 ====== */
 .panda-ground {
   position: absolute;
   bottom: 0;
-  width: 160px;
-  height: 12px;
-  background: var(--bamboo-green);
-  opacity: 0.15;
+  width: 120px;
+  height: 18px;
+  background: radial-gradient(ellipse, rgba(107,142,35,0.2) 0%, transparent 70%);
   border-radius: 50%;
 }
 
-/* ====== 泡芙身体 ====== */
+/* ====== 尾巴（蓬松） ====== */
+.panda-tail {
+  position: absolute;
+  bottom: 24px;
+  right: 12px;
+  width: 44px;
+  height: 64px;
+  z-index: 0;
+  transform-origin: bottom center;
+}
+.panda-tail-base {
+  position: absolute;
+  bottom: 0;
+  width: 44px;
+  height: 60px;
+  background: linear-gradient(180deg, #D4693E 0%, #C75B39 40%, #B84E2E 100%);
+  border-radius: 22px 22px 18px 18px;
+  box-shadow: inset 0 4px 8px rgba(255,255,255,0.1);
+}
+.panda-tail-ring {
+  position: absolute;
+  width: 46px;
+  height: 12px;
+  background: linear-gradient(180deg, #F5E1C8 0%, #E8D0B0 100%);
+  border-radius: 6px;
+  left: -1px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+.panda-tail-ring:nth-child(2) { top: 8px; }
+.panda-tail-ring:nth-child(3) { top: 26px; }
+.panda-tail-ring:nth-child(4) { top: 44px; }
+
+/* ====== 身体 ====== */
 .panda-body {
   position: relative;
-  width: 130px;
-  height: 130px;
+  width: 120px;
+  height: 124px;
   z-index: 1;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
-
-/* 身体主体 */
 .panda-body-main {
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 85px;
-  background: var(--panda-red);
-  border-radius: 50px 50px 40px 40px;
+  width: 96px;
+  height: 78px;
+  background: linear-gradient(180deg, #D4693E 0%, #C75B39 30%, #B84E2E 100%);
+  border-radius: 48px 48px 36px 36px;
+  box-shadow:
+    inset 0 6px 12px rgba(255,255,255,0.12),
+    inset 0 -8px 16px rgba(0,0,0,0.1),
+    0 4px 8px rgba(0,0,0,0.08);
 }
 
 /* 肚皮 */
 .panda-belly {
   position: absolute;
-  bottom: 8px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
-  width: 55px;
-  height: 50px;
-  background: var(--panda-belly);
+  width: 52px;
+  height: 46px;
+  background: radial-gradient(ellipse at 50% 30%, #FFF8F0 0%, #F5E1C8 60%, #E8D0B0 100%);
   border-radius: 50%;
+  box-shadow: inset 0 3px 6px rgba(255,255,255,0.5);
 }
 
 /* ====== 衣服 ====== */
@@ -84,67 +119,53 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 104px;
-  height: 45px;
-  background: var(--outfit-color, var(--panda-red));
-  border-radius: 40px 40px 20px 20px;
-  opacity: 0.9;
-  transition: background 0.4s ease;
+  width: 100px;
+  height: 42px;
+  background: linear-gradient(180deg, var(--outfit-color, #C75B39) 0%, color-mix(in srgb, var(--outfit-color, #C75B39) 85%, #000) 100%);
+  border-radius: 38px 38px 16px 16px;
+  box-shadow: inset 0 3px 6px rgba(255,255,255,0.15);
   z-index: 2;
+  transition: background 0.4s ease;
 }
-
 .panda-outfit::after {
   content: '';
   position: absolute;
-  top: -2px;
+  top: -1px;
   left: 50%;
   transform: translateX(-50%);
-  width: 40px;
-  height: 8px;
-  background: var(--outfit-color, var(--panda-red));
-  border-radius: 4px;
-  opacity: 0.7;
+  width: 36px;
+  height: 6px;
+  background: var(--outfit-color, #C75B39);
+  border-radius: 3px;
+  opacity: 0.8;
 }
 
 /* 蝴蝶结 */
 .panda-bow {
   position: absolute;
-  top: -22px;
-  right: -5px;
-  width: 20px;
-  height: 16px;
+  top: -20px;
+  right: -4px;
+  width: 22px;
+  height: 18px;
   z-index: 3;
-  transition: opacity 0.4s ease;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
 }
-
-.panda-bow::before,
-.panda-bow::after {
+.panda-bow::before, .panda-bow::after {
   content: '';
   position: absolute;
-  width: 12px;
-  height: 14px;
-  background: var(--outfit-color, var(--panda-red));
+  width: 14px;
+  height: 16px;
+  background: linear-gradient(135deg, var(--outfit-color, #C75B39), color-mix(in srgb, var(--outfit-color, #C75B39) 70%, #000));
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
 }
-
-.panda-bow::before {
-  left: 0;
-  transform: rotate(-20deg);
-}
-
-.panda-bow::after {
-  right: 0;
-  transform: rotate(20deg);
-}
-
+.panda-bow::before { left: 0; transform: rotate(-25deg); }
+.panda-bow::after { right: 0; transform: rotate(25deg); }
 .panda-bow-dot {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 5px;
-  height: 5px;
-  background: var(--panda-dark);
+  width: 6px; height: 6px;
+  background: radial-gradient(circle, #fff 0%, #ddd 100%);
   border-radius: 50%;
   z-index: 1;
 }
@@ -152,383 +173,319 @@
 /* ====== 前爪 ====== */
 .panda-paw {
   position: absolute;
-  bottom: 30px;
-  width: 22px;
-  height: 18px;
-  background: var(--panda-dark);
-  border-radius: 45%;
+  bottom: 28px;
+  width: 24px;
+  height: 20px;
+  background: linear-gradient(180deg, #6B3A2A 0%, #5D3A1A 100%);
+  border-radius: 50%;
   z-index: 3;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.panda-paw.left { left: 18px; }
+.panda-paw.right { right: 18px; }
+.panda-paw::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 8px;
+  background: radial-gradient(ellipse, rgba(245,225,200,0.6) 0%, transparent 70%);
+  border-radius: 50%;
 }
 
-.panda-paw.left {
-  left: 20px;
-}
-
-.panda-paw.right {
-  right: 20px;
-}
-
-/* ====== 泡芙头部 ====== */
+/* ====== 头部 ====== */
 .panda-head {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 110px;
-  height: 95px;
+  width: 112px;
+  height: 98px;
   z-index: 5;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.12));
 }
-
-/* 头部底色 */
 .panda-face {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 110px;
-  height: 95px;
-  background: var(--panda-red);
-  border-radius: 55px 55px 45px 45px;
+  width: 112px;
+  height: 98px;
+  background: linear-gradient(175deg, #E07850 0%, #D4693E 20%, #C75B39 50%, #B84E2E 100%);
+  border-radius: 56px 56px 44px 44px;
+  box-shadow:
+    inset 0 8px 16px rgba(255,255,255,0.1),
+    inset 0 -6px 12px rgba(0,0,0,0.08);
 }
 
 /* 耳朵 */
 .panda-ear {
   position: absolute;
-  top: 5px;
-  width: 28px;
-  height: 30px;
-  background: var(--panda-dark);
+  top: 2px;
+  width: 32px;
+  height: 34px;
+  background: linear-gradient(180deg, #6B3A2A 0%, #5D3A1A 100%);
   border-radius: 50% 50% 30% 30%;
   z-index: -1;
+  box-shadow: inset 0 2px 6px rgba(255,255,255,0.08);
 }
-
 .panda-ear::after {
   content: '';
   position: absolute;
-  top: 6px;
+  top: 8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 12px;
-  height: 14px;
-  background: #F5E1C8;
+  width: 14px;
+  height: 16px;
+  background: radial-gradient(ellipse, #F5E1C8 0%, transparent 70%);
   border-radius: 50%;
-  opacity: 0.6;
 }
+.panda-ear.left { left: 2px; }
+.panda-ear.right { right: 2px; }
 
-.panda-ear.left {
-  left: 5px;
-}
-
-.panda-ear.right {
-  right: 5px;
-}
-
-/* 白色脸部斑纹 */
+/* 脸部白色区域 */
 .panda-face-white {
   position: absolute;
-  top: 30px;
+  top: 32px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 50px;
-  background: var(--panda-belly);
-  border-radius: 40px 40px 35px 35px;
+  width: 84px;
+  height: 52px;
+  background: radial-gradient(ellipse at 50% 40%, #FFFDF8 0%, #F5E1C8 50%, #E8D0B0 100%);
+  border-radius: 42px 42px 34px 34px;
+  box-shadow: inset 0 4px 8px rgba(255,255,255,0.6);
 }
 
-/* 眼斑 — 深色泪痕 */
+/* 眼斑 */
 .panda-eye-patch {
   position: absolute;
-  top: 28px;
-  width: 24px;
-  height: 28px;
-  background: var(--panda-dark);
-  border-radius: 45% 45% 40% 40%;
+  top: 30px;
+  width: 26px;
+  height: 30px;
+  background: linear-gradient(180deg, #6B3A2A 0%, #4A2518 100%);
+  border-radius: 45% 45% 38% 38%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
-
-.panda-eye-patch.left {
-  left: 24px;
-  transform: rotate(-5deg);
-}
-
-.panda-eye-patch.right {
-  right: 24px;
-  transform: rotate(5deg);
-}
+.panda-eye-patch.left { left: 22px; transform: rotate(-6deg); }
+.panda-eye-patch.right { right: 22px; transform: rotate(6deg); }
 
 /* 眼睛 */
 .panda-eye {
   position: absolute;
-  top: 32px;
-  width: 14px;
-  height: 16px;
-  background: #1A1A1A;
+  top: 34px;
+  width: 16px;
+  height: 18px;
+  background: radial-gradient(circle at 45% 40%, #333 0%, #111 100%);
   border-radius: 50%;
   z-index: 2;
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.3);
 }
-
 .panda-eye::after {
   content: '';
   position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 5px;
-  height: 5px;
-  background: white;
+  top: 3px; left: 4px;
+  width: 6px; height: 6px;
+  background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.8) 100%);
   border-radius: 50%;
 }
-
-.panda-eye.left {
-  left: 29px;
-}
-
-.panda-eye.right {
-  right: 29px;
-}
+.panda-eye.left { left: 27px; }
+.panda-eye.right { right: 27px; }
 
 /* 鼻子 */
 .panda-nose {
   position: absolute;
-  top: 48px;
+  top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  width: 14px;
-  height: 10px;
-  background: var(--panda-nose);
+  width: 16px; height: 11px;
+  background: radial-gradient(ellipse at 50% 30%, #555 0%, #1A1110 100%);
   border-radius: 50%;
   z-index: 2;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 /* 嘴巴 */
 .panda-mouth {
   position: absolute;
-  top: 56px;
+  top: 58px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
 }
-
 .panda-mouth-line {
-  width: 20px;
-  height: 8px;
-  border-bottom: 2px solid var(--panda-dark);
+  width: 22px;
+  height: 9px;
+  border-bottom: 2.2px solid #4A2518;
   border-radius: 0 0 50% 50%;
 }
 
-/* ====== 尾巴 ====== */
-.panda-tail {
+/* ====== 腮红 ====== */
+.panda-blush {
   position: absolute;
-  bottom: 20px;
-  right: 15px;
-  width: 40px;
-  height: 60px;
-  z-index: 0;
-  transform-origin: bottom left;
+  top: 52px;
+  width: 14px; height: 10px;
+  background: radial-gradient(ellipse, rgba(255,150,130,0.5) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 1;
 }
+.panda-blush.left { left: 14px; }
+.panda-blush.right { right: 14px; }
 
-.panda-tail-base {
-  position: absolute;
-  bottom: 0;
-  width: 40px;
-  height: 55px;
-  background: var(--panda-red);
-  border-radius: 20px 20px 16px 16px;
+/* ====== 呼吸动画 ====== */
+@keyframes breathe {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.02); }
 }
-
-.panda-tail-ring {
-  position: absolute;
-  width: 42px;
-  height: 12px;
-  background: var(--panda-belly);
-  border-radius: 6px;
-  left: -1px;
+.panda-body-main {
+  animation: breathe 3s ease-in-out infinite;
 }
-
-.panda-tail-ring:nth-child(2) { top: 8px; }
-.panda-tail-ring:nth-child(3) { top: 26px; }
-.panda-tail-ring:nth-child(4) { top: 44px; }
 
 /* ====== 表情状态 ====== */
 
-/* 开心的泡芙 */
+/* 开心 */
 .panda-container[data-mood="happy"] .panda-tail {
-  animation: tailWag 0.6s ease-in-out infinite alternate;
+  animation: tailWag 0.55s ease-in-out infinite alternate;
 }
-
 .panda-container[data-mood="happy"] .panda-eye {
   height: 14px;
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
 }
-
 .panda-container[data-mood="happy"] .panda-mouth-line {
-  width: 26px;
-  height: 10px;
-  border-bottom-width: 2.5px;
+  width: 28px; height: 12px;
+  border-bottom-width: 2.8px;
 }
 
 /* 元气 */
-.panda-container[data-mood="energetic"] .panda-body-main {
-  animation: bodyBounce 1.2s ease-in-out infinite;
-}
-
 .panda-container[data-mood="energetic"] .panda-paw {
-  animation: pawWave 1.2s ease-in-out infinite alternate;
+  animation: pawBounce 0.8s ease-in-out infinite alternate;
+}
+.panda-container[data-mood="energetic"] .panda-eye {
+  height: 18px;
 }
 
 /* 中性 */
 .panda-container[data-mood="neutral"] .panda-tail {
-  animation: tailSlow 2s ease-in-out infinite alternate;
+  animation: tailSlow 2.5s ease-in-out infinite alternate;
 }
 
 /* 困倦 */
 .panda-container[data-mood="sleepy"] .panda-eye {
-  height: 6px;
+  height: 5px;
   border-radius: 50%;
   overflow: hidden;
 }
-
-.panda-container[data-mood="sleepy"] .panda-eye::after {
-  opacity: 0.3;
-}
-
+.panda-container[data-mood="sleepy"] .panda-eye::after { opacity: 0.2; }
 .panda-container[data-mood="sleepy"] .panda-head {
-  animation: headNod 3s ease-in-out infinite;
+  animation: headNod 3.5s ease-in-out infinite;
 }
 
 /* 低落 */
-.panda-container[data-mood="sad"] .panda-eye-patch {
-  transform: rotate(8deg);
-}
-
 .panda-container[data-mood="sad"] .panda-mouth-line {
-  width: 16px;
-  border-top: 2px solid var(--panda-dark);
+  width: 14px;
+  border-top: 2.2px solid #4A2518;
   border-bottom: none;
   border-radius: 50% 50% 0 0;
 }
+.panda-container[data-mood="sad"] .panda-blush { opacity: 0.3; }
 
 /* 压力 */
 .panda-container[data-mood="stressed"] .panda-body-main {
-  animation: bodyShake 0.3s ease-in-out infinite;
+  animation: bodyShake 0.25s ease-in-out infinite;
 }
-
 .panda-container[data-mood="stressed"] .panda-eye {
-  width: 16px;
-  height: 16px;
-  background: radial-gradient(circle, #FF6B6B 30%, #1A1A1A 70%);
-}
-
-/* ====== 动画关键帧 ====== */
-
-@keyframes tailWag {
-  from { transform: rotate(-15deg); }
-  to { transform: rotate(15deg); }
-}
-
-@keyframes tailSlow {
-  from { transform: rotate(-5deg); }
-  to { transform: rotate(8deg); }
-}
-
-@keyframes bodyBounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-4px); }
-}
-
-@keyframes pawWave {
-  from { transform: translateY(0); }
-  to { transform: translateY(-6px); }
-}
-
-@keyframes headNod {
-  0%, 100% { transform: translateX(-50%) rotate(0); }
-  30% { transform: translateX(-50%) rotate(3deg); }
-  70% { transform: translateX(-50%) rotate(-2deg); }
-}
-
-@keyframes bodyShake {
-  0%, 100% { transform: translateX(-50%); }
-  25% { transform: translateX(calc(-50% - 2px)); }
-  75% { transform: translateX(calc(-50% + 2px)); }
-}
-
-/* ====== 漂浮特效 ====== */
-.panda-sparkles {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-.panda-container[data-mood="happy"] .panda-sparkle {
-  position: absolute;
-  font-size: 14px;
-  animation: sparkleFloat 1.5s ease-out infinite;
-}
-
-.panda-sparkle:nth-child(1) { left: -30px; animation-delay: 0s; }
-.panda-sparkle:nth-child(2) { right: -25px; animation-delay: 0.5s; }
-.panda-sparkle:nth-child(3) { left: -10px; animation-delay: 1s; }
-
-@keyframes sparkleFloat {
-  0% { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-40px) scale(0.3); }
+  width: 18px; height: 18px;
+  background: radial-gradient(circle, #FF6B6B 30%, #111 70%);
 }
 
 /* ====== 抚摸动画 ====== */
 .panda-container.petting .panda-body-main {
   animation: petBounce 0.4s ease-in-out;
 }
-
 .panda-container.petting .panda-head {
   animation: petNod 0.4s ease-in-out;
 }
-
 .panda-container.petting .panda-eye {
-  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70% !important;
-  height: 8px !important;
+  border-radius: 50% 50% 50% 50% / 20% 20% 80% 80% !important;
+  height: 7px !important;
 }
-
 .panda-container.petting .panda-mouth-line {
-  width: 24px !important;
-  border-bottom-width: 2.5px !important;
+  width: 26px !important;
+  border-bottom-width: 3px !important;
 }
 
 .pet-effect {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 20;
 }
-
 .pet-heart {
   position: absolute;
-  font-size: 20px;
+  font-size: 22px;
   animation: petHeartUp 0.8s ease-out forwards;
   opacity: 0;
 }
+.pet-heart:nth-child(1) { left: -18px; animation-delay: 0s; }
+.pet-heart:nth-child(2) { left: 0px;  animation-delay: 0.12s; }
+.pet-heart:nth-child(3) { left: 18px; animation-delay: 0.24s; }
 
-.pet-heart:nth-child(1) { left: -10px; animation-delay: 0s; }
-.pet-heart:nth-child(2) { left: 5px; animation-delay: 0.15s; }
-.pet-heart:nth-child(3) { left: 20px; animation-delay: 0.3s; }
+/* ====== 漂浮特效 ====== */
+.panda-sparkles {
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%); pointer-events: none;
+}
+.panda-container[data-mood="happy"] .panda-sparkle {
+  position: absolute; font-size: 16px;
+  animation: sparkleFloat 1.8s ease-out infinite;
+}
+.panda-sparkle:nth-child(1) { left: -35px; animation-delay: 0s; }
+.panda-sparkle:nth-child(2) { right: -30px; animation-delay: 0.6s; }
+.panda-sparkle:nth-child(3) { left: -8px; animation-delay: 1.2s; }
 
+/* ====== 动画关键帧 ====== */
+@keyframes tailWag {
+  from { transform: rotate(-18deg); }
+  to { transform: rotate(18deg); }
+}
+@keyframes tailSlow {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(10deg); }
+}
+@keyframes pawBounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-7px); }
+}
+@keyframes headNod {
+  0%, 100% { transform: translateX(-50%) rotate(0); }
+  25% { transform: translateX(-50%) rotate(4deg); }
+  75% { transform: translateX(-50%) rotate(-3deg); }
+}
+@keyframes bodyShake {
+  0%, 100% { transform: translateX(-50%); }
+  25% { transform: translateX(calc(-50% - 2.5px)); }
+  75% { transform: translateX(calc(-50% + 2.5px)); }
+}
 @keyframes petBounce {
   0% { transform: translateX(-50%) translateY(0) scale(1); }
-  30% { transform: translateX(-50%) translateY(-8px) scale(1.05); }
-  60% { transform: translateX(-50%) translateY(-2px) scale(0.98); }
+  30% { transform: translateX(-50%) translateY(-10px) scale(1.06); }
+  60% { transform: translateX(-50%) translateY(-2px) scale(0.97); }
   100% { transform: translateX(-50%) translateY(0) scale(1); }
 }
-
 @keyframes petNod {
   0% { transform: translateX(-50%) rotate(0); }
-  30% { transform: translateX(-50%) rotate(-3deg); }
+  30% { transform: translateX(-50%) rotate(-4deg); }
   100% { transform: translateX(-50%) rotate(0); }
 }
-
 @keyframes petHeartUp {
-  0% { opacity: 1; transform: translateY(0) scale(0.5); }
-  50% { opacity: 1; transform: translateY(-20px) scale(1.2); }
-  100% { opacity: 0; transform: translateY(-40px) scale(0.8); }
+  0% { opacity: 1; transform: translateY(0) scale(0.4); }
+  50% { opacity: 1; transform: translateY(-24px) scale(1.3); }
+  100% { opacity: 0; transform: translateY(-48px) scale(0.6); }
+}
+@keyframes sparkleFloat {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-45px) scale(0.2); }
 }
