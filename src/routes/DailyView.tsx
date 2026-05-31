@@ -83,19 +83,23 @@ export function DailyView() {
         padding: 'calc(12px + var(--safe-top)) 20px 0',
         textAlign: 'center',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 4 }}>
           <button onClick={() => goDay(-1)} style={{
-            border: 'none', background: 'none', fontSize: 20, cursor: 'pointer',
-            padding: '4px 8px', color: 'var(--color-text-light)', minWidth: 44, minHeight: 44,
+            border: 'none', background: 'var(--color-bg)', fontSize: 18, cursor: 'pointer',
+            width: 44, height: 44, borderRadius: '50%',
+            color: 'var(--color-text)', display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>◀</button>
-          <div style={{ fontSize: 13, color: 'var(--color-text-light)', minWidth: 140 }}>
+          <div style={{ fontSize: 13, color: 'var(--color-text-light)', minWidth: 130, textAlign: 'center' }}>
             {dateStr}
             {isToday && <span style={{ color: themeColor, fontWeight: 600, marginLeft: 4 }}>· 今天</span>}
           </div>
           <button onClick={() => goDay(1)} disabled={isToday} style={{
-            border: 'none', background: 'none', fontSize: 20, cursor: isToday ? 'default' : 'pointer',
-            padding: '4px 8px', color: isToday ? 'var(--color-border)' : 'var(--color-text-light)',
-            opacity: isToday ? 0.3 : 1, minWidth: 44, minHeight: 44,
+            border: 'none', background: isToday ? 'transparent' : 'var(--color-bg)', fontSize: 18,
+            cursor: isToday ? 'default' : 'pointer',
+            width: 44, height: 44, borderRadius: '50%',
+            color: isToday ? 'var(--color-border)' : 'var(--color-text)',
+            opacity: isToday ? 0.3 : 1,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>▶</button>
         </div>
         <PhaseBadge phase={displayPhase} />
