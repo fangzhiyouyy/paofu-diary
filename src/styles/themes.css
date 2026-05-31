@@ -1,0 +1,108 @@
+/* ====== 泡芙日记 · 全局主题变量 ====== */
+
+:root {
+  /* 中性色 */
+  --color-bg: #FFFAF5;
+  --color-text: #4A3728;
+  --color-text-light: #8D7B6D;
+  --color-border: #E8DDD4;
+  --color-card: #FFFFFF;
+  --color-shadow: rgba(74, 55, 40, 0.08);
+
+  /* 泡芙本色 */
+  --panda-red: #C75B39;
+  --panda-dark: #5D3A1A;
+  --panda-belly: #F5E1C8;
+  --panda-nose: #3D2314;
+
+  /* 竹子绿 */
+  --bamboo-green: #6B8E23;
+
+  /* 圆角系统 */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+
+  /* 阴影 */
+  --shadow-sm: 0 2px 8px var(--color-shadow);
+  --shadow-md: 0 4px 16px var(--color-shadow);
+  --shadow-lg: 0 8px 32px var(--color-shadow);
+
+  /* 字体 */
+  --font-title: 'ZCOOL KuaiLe', 'PingFang SC', 'Hiragino Sans GB', system-ui, sans-serif;
+  --font-body: 'PingFang SC', 'Hiragino Sans GB', system-ui, -apple-system, sans-serif;
+
+  /* 间距 */
+  --safe-bottom: env(safe-area-inset-bottom, 16px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}
+
+/* ====== 四阶段主题色变量（由 JS 动态设置） ====== */
+[data-phase="menstrual"] {
+  --phase-color: #E8576B;
+  --phase-bg: #FCE4EC;
+  --phase-gradient: linear-gradient(135deg, #E8576B, #F4A0B0);
+}
+
+[data-phase="follicular"] {
+  --phase-color: #7BC67E;
+  --phase-bg: #E8F5E9;
+  --phase-gradient: linear-gradient(135deg, #7BC67E, #B8E6B8);
+}
+
+[data-phase="ovulation"] {
+  --phase-color: #F4A7B9;
+  --phase-bg: #FDE4EC;
+  --phase-gradient: linear-gradient(135deg, #F4A7B9, #FDE4EC);
+}
+
+[data-phase="luteal"] {
+  --phase-color: #E8A87C;
+  --phase-bg: #FFF3E0;
+  --phase-gradient: linear-gradient(135deg, #E8A87C, #F5D5B8);
+}
+
+/* ====== 全局重置 ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ====== 通用工具类 ====== */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}

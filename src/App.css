@@ -1,0 +1,31 @@
+/* ====== App 全局布局 ====== */
+
+/* 移除 Vite 默认样式 */
+#root {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+/* 点击高亮 */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* iOS 安全区域 */
+main {
+  padding-top: env(safe-area-inset-top, 0px);
+}

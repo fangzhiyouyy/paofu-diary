@@ -1,0 +1,36 @@
+/* 主题变量和全局样式已在 src/styles/themes.css 中定义 */
+/* 此文件负责额外的基础重置 */
+
+@import './styles/themes.css';
+
+/* 全局框模型 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 基础排版 */
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+}
+
+/* 链接 */
+a {
+  color: var(--panda-red);
+  text-decoration: none;
+}
+
+/* 输入框全局 */
+input, select, textarea, button {
+  font-family: inherit;
+}
+
+/* 禁止 iOS 缩放 */
+input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+}
