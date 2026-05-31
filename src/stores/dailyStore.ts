@@ -47,7 +47,7 @@ export const useDailyStore = create<DailyState>((set, get) => ({
 
       const newBehavior: Behavior = {
         ...b,
-        id: crypto.randomUUID(),
+        id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9),
         date: today,
         effects,
       }
