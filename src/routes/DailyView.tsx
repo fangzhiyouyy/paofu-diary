@@ -217,6 +217,7 @@ export function DailyView() {
         <>
           <div
             onClick={() => setShowForm(false)}
+            onTouchMove={e => e.preventDefault()}
             style={{
               position: 'fixed',
               inset: 0,
