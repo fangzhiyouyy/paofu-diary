@@ -104,6 +104,7 @@ export function PandaWidget({ mood, outfitColor }: Props) {
           {outfitColor && (
             <div className="head-bow">
               <div className="head-bow-dot" />
+              <div className="head-bow-ribbon" />
             </div>
           )}
           <div className="panda-face">
@@ -128,11 +129,7 @@ export function PandaWidget({ mood, outfitColor }: Props) {
           <div className="panda-body-main">
             <div className="panda-belly" />
             {outfitColor && (
-              <div className="panda-outfit">
-                <div className="panda-bow">
-                  <div className="panda-bow-dot" />
-                </div>
-              </div>
+              <div className="panda-outfit" />
             )}
             <div className="panda-paw left" />
             <div className="panda-paw right" />
