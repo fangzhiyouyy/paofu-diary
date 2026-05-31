@@ -84,7 +84,7 @@ export function DailyView() {
         textAlign: 'center',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 4 }}>
-          <button onClick={() => goDay(-1)} style={{
+          <button type="button" onClick={() => goDay(-1)} style={{
             border: 'none', background: 'var(--color-bg)', fontSize: 18, cursor: 'pointer',
             width: 44, height: 44, borderRadius: '50%',
             color: 'var(--color-text)', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -93,7 +93,7 @@ export function DailyView() {
             {dateStr}
             {isToday && <span style={{ color: themeColor, fontWeight: 600, marginLeft: 4 }}>· 今天</span>}
           </div>
-          <button onClick={() => { if (!isToday) goDay(1) }} style={{
+          <button type="button" onClick={() => { if (!isToday) goDay(1) }} style={{
             border: 'none', background: isToday ? 'transparent' : 'var(--color-bg)', fontSize: 18,
             cursor: isToday ? 'default' : 'pointer',
             width: 44, height: 44, borderRadius: '50%',
