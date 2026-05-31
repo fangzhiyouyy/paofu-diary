@@ -88,7 +88,7 @@ export function PandaWidget({ mood, outfitColor }: Props) {
           transition: dragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
-        {/* 尾巴 */}
+        {/* 尾巴（右侧） */}
         <div className="panda-tail">
           <div className="panda-tail-base">
             <div className="panda-tail-ring" />
@@ -97,7 +97,28 @@ export function PandaWidget({ mood, outfitColor }: Props) {
           </div>
         </div>
 
-        {/* 身体 */}
+        {/* 头部 */}
+        <div className="panda-head">
+          <div className="panda-ear left" />
+          <div className="panda-ear right" />
+          <div className="panda-face">
+            <div className="panda-face-white" />
+            <div className="panda-eye-patch left" />
+            <div className="panda-eye-patch right" />
+            <div className="panda-eye left" />
+            <div className="panda-eye right" />
+            <div className="panda-eyebrow left" />
+            <div className="panda-eyebrow right" />
+            <div className="panda-blush left" />
+            <div className="panda-blush right" />
+            <div className="panda-nose" />
+            <div className="panda-mouth">
+              <div className="panda-mouth-line" />
+            </div>
+          </div>
+        </div>
+
+        {/* 身体（头部下方，margin-top: -18px 重叠） */}
         <div className="panda-body">
           <div className="panda-body-main">
             <div className="panda-belly" />
@@ -111,29 +132,9 @@ export function PandaWidget({ mood, outfitColor }: Props) {
             <div className="panda-paw left" />
             <div className="panda-paw right" />
           </div>
-
-          {/* 头部 */}
-          <div className="panda-head">
-            <div className="panda-ear left" />
-            <div className="panda-ear right" />
-            <div className="panda-face">
-              <div className="panda-face-white" />
-              <div className="panda-eye-patch left" />
-              <div className="panda-eye-patch right" />
-              <div className="panda-eye left" />
-              <div className="panda-eye right" />
-              <div className="panda-eyebrow left" />
-              <div className="panda-eyebrow right" />
-              <div className="panda-blush left" />
-              <div className="panda-blush right" />
-              <div className="panda-nose" />
-              <div className="panda-mouth">
-                <div className="panda-mouth-line" />
-              </div>
-            </div>
-          </div>
         </div>
 
+        {/* 地面阴影 */}
         <div className="panda-ground" />
       </div>
     </div>

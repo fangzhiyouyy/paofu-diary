@@ -1,177 +1,43 @@
-/* ====== 泡芙 · kawaii 红熊猫 ====== */
+/* ====== 泡芙 v3 — 垂直堆叠，简单可靠 ====== */
 
 .panda-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  position: relative;
-  width: 100%;
+  justify-content: center;
+  padding: 0;
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
   cursor: grab;
-  overflow: visible;
 }
-.panda-container[data-dragging] {
-  cursor: grabbing;
-}
+.panda-container[data-dragging] { cursor: grabbing; }
 
+/* 场景：相对定位，居中 */
 .panda-scene {
   position: relative;
-  width: 100%;
-  max-width: 300px;
-  aspect-ratio: 3 / 4;
+  width: 200px;
+  padding: 0 40px 20px 0;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  pointer-events: none;
-  filter: drop-shadow(0 6px 14px rgba(74,55,40,0.12));
+  flex-direction: column;
+  align-items: center;
+  filter: drop-shadow(0 4px 10px rgba(74,55,40,0.1));
   perspective: 500px;
   transform-style: preserve-3d;
-  overflow: visible;
 }
 
-.panda-ground {
-  position: absolute;
-  bottom: 0;
-  width: 100px;
-  height: 16px;
-  background: radial-gradient(ellipse, rgba(107,142,35,0.18) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-/* ====== 大尾巴 ====== */
-.panda-tail {
-  position: absolute;
-  bottom: 28px;
-  right: 6px;
-  width: 52px;
-  height: 80px;
-  z-index: 0;
-  transform-origin: bottom center;
-}
-.panda-tail-base {
-  width: 52px; height: 76px;
-  background: linear-gradient(180deg, #D9734A 0%, #C75B39 35%, #B84E2E 100%);
-  border-radius: 28px 28px 20px 20px;
-  box-shadow: inset 0 3px 8px rgba(255,255,255,0.1);
-}
-.panda-tail-ring {
-  position: absolute;
-  width: 54px; height: 14px;
-  background: linear-gradient(180deg, #F5E3D0 0%, #E8D0B0 100%);
-  border-radius: 8px; left: -1px;
-}
-.panda-tail-ring:nth-child(2) { top: 10px; }
-.panda-tail-ring:nth-child(3) { top: 32px; }
-.panda-tail-ring:nth-child(4) { top: 54px; }
-
-/* ====== 身体 — 苗条 ====== */
-.panda-body {
-  position: relative;
-  width: 100px;
-  height: 130px;
-  z-index: 1;
-  margin-bottom: 10px;
-}
-.panda-body-main {
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 82px; height: 72px;
-  background: linear-gradient(180deg, #D9734A 0%, #C75B39 40%, #A84428 100%);
-  border-radius: 42px 42px 30px 32px;
-  box-shadow:
-    inset 0 5px 10px rgba(255,255,255,0.1),
-    inset 0 -6px 12px rgba(0,0,0,0.08),
-    0 3px 6px rgba(0,0,0,0.06);
-  animation: breathe 3s ease-in-out infinite;
-}
-.panda-belly {
-  position: absolute;
-  bottom: 5px; left: 50%;
-  transform: translateX(-50%);
-  width: 46px; height: 40px;
-  background: radial-gradient(ellipse at 50% 30%, #FFFBF5 0%, #F5E1C8 55%, #E5CDA8 100%);
-  border-radius: 50%;
-  box-shadow: inset 0 2px 6px rgba(255,255,255,0.5);
-}
-
-/* 衣服 */
-.panda-outfit {
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 86px; height: 38px;
-  background: linear-gradient(180deg, var(--outfit-color,#C75B39) 0%, color-mix(in srgb, var(--outfit-color,#C75B39) 80%, #000) 100%);
-  border-radius: 34px 34px 14px 14px;
-  box-shadow: inset 0 2px 5px rgba(255,255,255,0.12);
-  z-index: 2;
-  transition: background 0.4s;
-}
-.panda-outfit::after {
-  content: ''; position: absolute; top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 32px; height: 5px;
-  background: var(--outfit-color,#C75B39);
-  border-radius: 3px; opacity: 0.8;
-}
-.panda-bow {
-  position: absolute; top: -18px; right: -2px;
-  width: 22px; height: 16px; z-index: 3;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.12));
-}
-.panda-bow::before, .panda-bow::after {
-  content: ''; position: absolute;
-  width: 14px; height: 15px;
-  background: linear-gradient(135deg, var(--outfit-color,#C75B39), color-mix(in srgb, var(--outfit-color,#C75B39) 65%, #000));
-  border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
-}
-.panda-bow::before { left: 0; transform: rotate(-22deg); }
-.panda-bow::after { right: 0; transform: rotate(22deg); }
-.panda-bow-dot {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 6px; height: 6px;
-  background: radial-gradient(circle, #fff 0%, #ddd 100%);
-  border-radius: 50%; z-index: 1;
-}
-
-/* 爪子 */
-.panda-paw {
-  position: absolute;
-  bottom: 24px;
-  width: 20px; height: 16px;
-  background: linear-gradient(180deg, #5D3A1A 0%, #4A2518 100%);
-  border-radius: 50%;
-  z-index: 3;
-}
-.panda-paw.left { left: 14px; }
-.panda-paw.right { right: 14px; }
-
-/* ====== 大头 — kawaii 比例 ====== */
+/* ====== 头部 ====== */
 .panda-head {
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   width: 120px; height: 106px;
+  flex-shrink: 0;
   z-index: 5;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
 }
 .panda-face {
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
   width: 120px; height: 106px;
   background: linear-gradient(170deg, #E88460 0%, #D4693E 25%, #C75B39 55%, #B84E2E 100%);
   border-radius: 62px 62px 50px 50px;
-  box-shadow:
-    inset 0 7px 14px rgba(255,255,255,0.08),
-    inset 0 -5px 10px rgba(0,0,0,0.06);
+  box-shadow: inset 0 7px 14px rgba(255,255,255,0.08), inset 0 -5px 10px rgba(0,0,0,0.06);
 }
-
-/* 耳朵 — 白色内耳 */
 .panda-ear {
   position: absolute;
   top: 4px;
@@ -182,27 +48,21 @@
 }
 .panda-ear::after {
   content: ''; position: absolute;
-  top: 6px; left: 50%;
-  transform: translateX(-50%);
+  top: 6px; left: 50%; transform: translateX(-50%);
   width: 18px; height: 20px;
   background: radial-gradient(ellipse at 50% 60%, #FFFDF5 0%, #F0E0C8 100%);
   border-radius: 50%;
 }
 .panda-ear.left { left: 0; }
 .panda-ear.right { right: 0; }
-
-/* 脸部白色 */
 .panda-face-white {
   position: absolute;
-  top: 36px; left: 50%;
-  transform: translateX(-50%);
+  top: 36px; left: 50%; transform: translateX(-50%);
   width: 88px; height: 56px;
   background: radial-gradient(ellipse at 50% 35%, #FFFDF8 0%, #F5E1C8 45%, #E5CDA8 100%);
   border-radius: 44px 44px 38px 38px;
   box-shadow: inset 0 3px 8px rgba(255,255,255,0.5);
 }
-
-/* 眼斑 */
 .panda-eye-patch {
   position: absolute;
   top: 34px;
@@ -212,8 +72,6 @@
 }
 .panda-eye-patch.left { left: 20px; transform: rotate(-7deg); }
 .panda-eye-patch.right { right: 20px; transform: rotate(7deg); }
-
-/* 大眼睛 */
 .panda-eye {
   position: absolute;
   top: 38px;
@@ -229,19 +87,14 @@
   background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0.7) 100%);
   border-radius: 50%;
 }
-/* 小白点 */
 .panda-eye::before {
   content: ''; position: absolute;
   top: 7px; left: 10px;
   width: 3px; height: 3px;
-  background: #fff;
-  border-radius: 50%;
-  opacity: 0.7;
+  background: #fff; border-radius: 50%; opacity: 0.7;
 }
 .panda-eye.left { left: 25px; }
 .panda-eye.right { right: 25px; }
-
-/* 眉毛 — 白色小点 */
 .panda-eyebrow {
   position: absolute;
   top: 35px;
@@ -252,23 +105,17 @@
 }
 .panda-eyebrow.left { left: 28px; }
 .panda-eyebrow.right { right: 28px; }
-
-/* 鼻子 */
 .panda-nose {
   position: absolute;
-  top: 56px; left: 50%;
-  transform: translateX(-50%);
+  top: 56px; left: 50%; transform: translateX(-50%);
   width: 16px; height: 10px;
   background: radial-gradient(ellipse at 50% 30%, #444 0%, #1A100C 100%);
   border-radius: 50%;
   z-index: 2;
 }
-
-/* 嘴巴 */
 .panda-mouth {
   position: absolute;
-  top: 63px; left: 50%;
-  transform: translateX(-50%);
+  top: 63px; left: 50%; transform: translateX(-50%);
   z-index: 2;
 }
 .panda-mouth-line {
@@ -276,8 +123,6 @@
   border-bottom: 2px solid #4A2518;
   border-radius: 0 0 50% 50%;
 }
-
-/* 腮红 */
 .panda-blush {
   position: absolute;
   top: 58px;
@@ -289,39 +134,128 @@
 .panda-blush.left { left: 10px; }
 .panda-blush.right { right: 10px; }
 
-/* ====== 表情 ====== */
+/* ====== 身体（在头部下方，margin-top 负值产生重叠） ====== */
+.panda-body {
+  position: relative;
+  width: 82px; height: 80px;
+  margin-top: -18px;
+  z-index: 3;
+  flex-shrink: 0;
+}
+.panda-body-main {
+  width: 82px; height: 72px;
+  background: linear-gradient(180deg, #D9734A 0%, #C75B39 40%, #A84428 100%);
+  border-radius: 42px 42px 30px 32px;
+  box-shadow:
+    inset 0 5px 10px rgba(255,255,255,0.1),
+    inset 0 -6px 12px rgba(0,0,0,0.08),
+    0 3px 6px rgba(0,0,0,0.06);
+  animation: breathe 3s ease-in-out infinite;
+  position: relative;
+}
+.panda-belly {
+  position: absolute;
+  bottom: 5px; left: 50%; transform: translateX(-50%);
+  width: 46px; height: 40px;
+  background: radial-gradient(ellipse at 50% 30%, #FFFBF5 0%, #F5E1C8 55%, #E5CDA8 100%);
+  border-radius: 50%;
+  box-shadow: inset 0 2px 6px rgba(255,255,255,0.5);
+}
+.panda-outfit {
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 86px; height: 38px;
+  background: linear-gradient(180deg, var(--outfit-color,#C75B39) 0%, color-mix(in srgb, var(--outfit-color,#C75B39) 80%, #000) 100%);
+  border-radius: 34px 34px 14px 14px;
+  box-shadow: inset 0 2px 5px rgba(255,255,255,0.12);
+  z-index: 2;
+  transition: background 0.4s;
+}
+.panda-bow {
+  position: absolute; top: -18px; right: -2px;
+  width: 22px; height: 16px; z-index: 3;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.12));
+}
+.panda-bow::before, .panda-bow::after {
+  content: ''; position: absolute;
+  width: 14px; height: 15px;
+  background: linear-gradient(135deg, var(--outfit-color,#C75B39), color-mix(in srgb, var(--outfit-color,#C75B39) 65%, #000));
+  border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+}
+.panda-bow::before { left: 0; transform: rotate(-22deg); }
+.panda-bow::after { right: 0; transform: rotate(22deg); }
+.panda-bow-dot {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 6px; height: 6px;
+  background: radial-gradient(circle, #fff 0%, #ddd 100%);
+  border-radius: 50%; z-index: 1;
+}
+.panda-paw {
+  position: absolute;
+  bottom: 24px;
+  width: 20px; height: 16px;
+  background: linear-gradient(180deg, #5D3A1A 0%, #4A2518 100%);
+  border-radius: 50%;
+  z-index: 4;
+}
+.panda-paw.left { left: 14px; }
+.panda-paw.right { right: 14px; }
+
+/* ====== 尾巴（绝对定位在身体右侧） ====== */
+.panda-tail {
+  position: absolute;
+  right: 0;
+  bottom: 44px;
+  width: 44px; height: 70px;
+  z-index: 0;
+  transform-origin: bottom center;
+}
+.panda-tail-base {
+  width: 44px; height: 66px;
+  background: linear-gradient(180deg, #D9734A 0%, #C75B39 35%, #B84E2E 100%);
+  border-radius: 24px 24px 18px 18px;
+  box-shadow: inset 0 3px 8px rgba(255,255,255,0.1);
+  position: relative;
+}
+.panda-tail-ring {
+  position: absolute;
+  width: 46px; height: 12px;
+  background: linear-gradient(180deg, #F5E3D0 0%, #E8D0B0 100%);
+  border-radius: 7px; left: -1px;
+}
+.panda-tail-ring:nth-child(2) { top: 8px; }
+.panda-tail-ring:nth-child(3) { top: 26px; }
+.panda-tail-ring:nth-child(4) { top: 44px; }
+
+/* 地面阴影 */
+.panda-ground {
+  width: 90px; height: 14px;
+  flex-shrink: 0;
+  background: radial-gradient(ellipse, rgba(107,142,35,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  margin-top: -8px;
+}
+
+/* ====== 表情状态 ====== */
 .panda-container[data-mood="happy"] .panda-tail { animation: tailWag 0.5s ease-in-out infinite alternate; }
 .panda-container[data-mood="happy"] .panda-eye { height: 15px; border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%; }
 .panda-container[data-mood="happy"] .panda-mouth-line { width: 30px; height: 13px; border-bottom-width: 2.5px; }
-
 .panda-container[data-mood="energetic"] .panda-paw { animation: pawBounce 0.7s ease-in-out infinite alternate; }
 .panda-container[data-mood="energetic"] .panda-eye { height: 20px; }
-
 .panda-container[data-mood="neutral"] .panda-tail { animation: tailSlow 2.5s ease-in-out infinite alternate; }
-
 .panda-container[data-mood="sleepy"] .panda-eye { height: 5px; border-radius: 50%; overflow: hidden; }
 .panda-container[data-mood="sleepy"] .panda-eye::after,
 .panda-container[data-mood="sleepy"] .panda-eye::before { opacity: 0.1; }
 .panda-container[data-mood="sleepy"] .panda-head { animation: headNod 4s ease-in-out infinite; }
-
-.panda-container[data-mood="sad"] .panda-mouth-line {
-  width: 14px; border-top: 2px solid #4A2518; border-bottom: none; border-radius: 50% 50% 0 0;
-}
+.panda-container[data-mood="sad"] .panda-mouth-line { width: 14px; border-top: 2px solid #4A2518; border-bottom: none; border-radius: 50% 50% 0 0; }
 .panda-container[data-mood="sad"] .panda-blush { opacity: 0.25; }
-
 .panda-container[data-mood="stressed"] .panda-body-main { animation: bodyShake 0.22s ease-in-out infinite; }
-.panda-container[data-mood="stressed"] .panda-eye {
-  width: 20px; height: 20px;
-  background: radial-gradient(circle, #FF6B6B 35%, #0A0A0A 70%);
-}
+.panda-container[data-mood="stressed"] .panda-eye { width: 20px; height: 20px; background: radial-gradient(circle, #FF6B6B 35%, #0A0A0A 70%); }
 
-/* ====== 抚摸 ====== */
+/* 抚摸 */
 .panda-container.petting .panda-body-main { animation: petBounce 0.4s ease-in-out; }
 .panda-container.petting .panda-head { animation: petNod 0.4s ease-in-out; }
-.panda-container.petting .panda-eye {
-  border-radius: 50% 50% 50% 50% / 20% 20% 80% 80% !important;
-  height: 6px !important;
-}
+.panda-container.petting .panda-eye { border-radius: 50% 50% 50% 50% / 20% 20% 80% 80% !important; height: 6px !important; }
 .panda-container.petting .panda-mouth-line { width: 28px !important; border-bottom-width: 3px !important; }
 
 .pet-effect { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 20; }
@@ -330,51 +264,20 @@
 .pet-heart:nth-child(2) { left: 0; animation-delay: 0.1s; }
 .pet-heart:nth-child(3) { left: 22px; animation-delay: 0.2s; }
 
-/* ====== 星星 ====== */
 .panda-sparkles { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); pointer-events: none; }
-.panda-container[data-mood="happy"] .panda-sparkle {
-  position: absolute; font-size: 18px;
-  animation: sparkleFloat 1.6s ease-out infinite;
-}
+.panda-container[data-mood="happy"] .panda-sparkle { position: absolute; font-size: 18px; animation: sparkleFloat 1.6s ease-out infinite; }
 .panda-sparkle:nth-child(1) { left: -40px; }
 .panda-sparkle:nth-child(2) { right: -35px; animation-delay: 0.5s; }
 .panda-sparkle:nth-child(3) { left: -5px; animation-delay: 1s; }
 
-/* ====== 关键帧 ====== */
-@keyframes breathe {
-  0%,100% { transform: translateX(-50%) scale(1); }
-  50% { transform: translateX(-50%) scale(1.015); }
-}
+/* ====== 动画关键帧 ====== */
+@keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.015); } }
 @keyframes tailWag { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
 @keyframes tailSlow { from { transform: rotate(-5deg); } to { transform: rotate(8deg); } }
 @keyframes pawBounce { from { transform: translateY(0); } to { transform: translateY(-6px); } }
-@keyframes headNod {
-  0%,100% { transform: translateX(-50%) rotate(0); }
-  25% { transform: translateX(-50%) rotate(3deg); }
-  75% { transform: translateX(-50%) rotate(-2deg); }
-}
-@keyframes bodyShake {
-  0%,100% { transform: translateX(-50%); }
-  25% { transform: translateX(calc(-50% - 2px)); }
-  75% { transform: translateX(calc(-50% + 2px)); }
-}
-@keyframes petBounce {
-  0% { transform: translateX(-50%) translateY(0) scale(1); }
-  30% { transform: translateX(-50%) translateY(-10px) scale(1.05); }
-  60% { transform: translateX(-50%) translateY(-2px) scale(0.97); }
-  100% { transform: translateX(-50%) translateY(0) scale(1); }
-}
-@keyframes petNod {
-  0% { transform: translateX(-50%) rotate(0); }
-  30% { transform: translateX(-50%) rotate(-5deg); }
-  100% { transform: translateX(-50%) rotate(0); }
-}
-@keyframes petHeartUp {
-  0% { opacity: 1; transform: translateY(0) scale(0.3); }
-  50% { opacity: 1; transform: translateY(-28px) scale(1.4); }
-  100% { opacity: 0; transform: translateY(-55px) scale(0.5); }
-}
-@keyframes sparkleFloat {
-  0% { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-50px) scale(0.2); }
-}
+@keyframes headNod { 0%,100% { transform: rotate(0); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-2deg); } }
+@keyframes bodyShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
+@keyframes petBounce { 0% { transform: translateY(0) scale(1); } 30% { transform: translateY(-10px) scale(1.05); } 60% { transform: translateY(-2px) scale(0.97); } 100% { transform: translateY(0) scale(1); } }
+@keyframes petNod { 0% { transform: rotate(0); } 30% { transform: rotate(-5deg); } 100% { transform: rotate(0); } }
+@keyframes petHeartUp { 0% { opacity: 1; transform: translateY(0) scale(0.3); } 50% { opacity: 1; transform: translateY(-28px) scale(1.4); } 100% { opacity: 0; transform: translateY(-55px) scale(0.5); } }
+@keyframes sparkleFloat { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-50px) scale(0.2); } }
