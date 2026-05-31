@@ -20,10 +20,10 @@ export type CyclePhase = 'menstrual' | 'follicular' | 'ovulation' | 'luteal'
 export const PHASE_META: Record<CyclePhase, {
   label: string; emoji: string; color: string; bgColor: string
 }> = {
-  menstrual:  { label: '经期',   emoji: '🌹', color: '#E8576B', bgColor: '#FCE4EC' },
-  follicular: { label: '卵泡期', emoji: '🌱', color: '#7BC67E', bgColor: '#E8F5E9' },
-  ovulation:  { label: '排卵期', emoji: '🌸', color: '#F4A7B9', bgColor: '#FDE4EC' },
-  luteal:     { label: '黄体期', emoji: '🍂', color: '#E8A87C', bgColor: '#FFF3E0' },
+  menstrual:  { label: '经期',   emoji: '🌹', color: '#D32F2F', bgColor: '#FFEBEE' },
+  follicular: { label: '卵泡期', emoji: '🌱', color: '#388E3C', bgColor: '#E8F5E9' },
+  ovulation:  { label: '排卵期', emoji: '🌸', color: '#EC407A', bgColor: '#FFF0F5' },
+  luteal:     { label: '黄体期', emoji: '🍂', color: '#F57C00', bgColor: '#FFF8E1' },
 }
 
 export interface PhaseRange {
