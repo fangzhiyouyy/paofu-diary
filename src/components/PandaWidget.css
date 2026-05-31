@@ -5,10 +5,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8px 0 0;
+  padding: 0;
   position: relative;
-  height: 280px;
-  flex-shrink: 0;
+  min-height: 320px;
   touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
@@ -18,9 +17,7 @@
 /* 手机缩放 */
 @media (max-width: 400px) {
   .panda-container {
-    transform: scale(0.82);
-    transform-origin: center center;
-    height: 260px;
+    min-height: 280px;
   }
 }
 
@@ -33,6 +30,8 @@
   justify-content: center;
   pointer-events: none;
   filter: drop-shadow(0 8px 16px rgba(74, 55, 40, 0.15));
+  perspective: 400px;
+  transform-style: preserve-3d;
 }
 
 /* ====== 阴影底座 ====== */

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { PandaMood } from '../types'
 import './PandaWidget.css'
 
@@ -9,6 +9,34 @@ interface Props {
 
 export function PandaWidget({ mood, outfitColor }: Props) {
   const [petting, setPetting] = useState(false)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  // 陀螺仪倾斜
+  useEffect(() => {
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      if (e.gamma !== null && e.beta !== null) {
+        // gamma: 左右 -45~45, beta: 前后 -45~45
+        const x = Math.max(-15, Math.min(15, (e.gamma || 0) * 0.4))
+        const y = Math.max(-15, Math.min(15, ((e.beta || 0) - 45) * 0.3))
+        setTilt({ x, y })
+      }
+    }
+    window.addEventListener('deviceorientation', handleOrientation)
+    return () => window.removeEventListener('deviceorientation', handleOrientation)
+  }, [])
+
+  // 桌面鼠标视差
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const cx = rect.left + rect.width / 2
+    const cy = rect.top + rect.height / 2
+    const x = ((e.clientX - cx) / rect.width) * 16
+    const y = ((e.clientY - cy) / rect.height) * 12
+    setTilt({ x, y })
+  }
+  const handleMouseLeave = () => setTilt({ x: 0, y: 0 })
 
   const handlePet = () => {
     if (petting) return
@@ -18,10 +46,13 @@ export function PandaWidget({ mood, outfitColor }: Props) {
 
   return (
     <div
+      ref={containerRef}
       className={`panda-container${petting ? ' petting' : ''}`}
       data-mood={mood}
       style={{ '--outfit-color': outfitColor || undefined } as React.CSSProperties}
       onPointerDown={handlePet}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       role="button"
       aria-label="抚摸泡芙"
       tabIndex={0}
@@ -44,7 +75,13 @@ export function PandaWidget({ mood, outfitColor }: Props) {
         </div>
       )}
 
-      <div className="panda-scene">
+      <div
+        className="panda-scene"
+        style={{
+          transform: `rotateY(${tilt.x}deg) rotateX(${-tilt.y}deg)`,
+          transition: tilt.x === 0 && tilt.y === 0 ? 'transform 0.6s ease-out' : 'none',
+        }}
+      >
         {/* 尾巴 */}
         <div className="panda-tail">
           <div className="panda-tail-base">
@@ -58,8 +95,6 @@ export function PandaWidget({ mood, outfitColor }: Props) {
         <div className="panda-body">
           <div className="panda-body-main">
             <div className="panda-belly" />
-
-            {/* 衣服 */}
             {outfitColor && (
               <div className="panda-outfit">
                 <div className="panda-bow">
@@ -67,8 +102,6 @@ export function PandaWidget({ mood, outfitColor }: Props) {
                 </div>
               </div>
             )}
-
-            {/* 前爪 */}
             <div className="panda-paw left" />
             <div className="panda-paw right" />
           </div>
