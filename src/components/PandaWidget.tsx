@@ -101,6 +101,11 @@ export function PandaWidget({ mood, outfitColor }: Props) {
         <div className="panda-head">
           <div className="panda-ear left" />
           <div className="panda-ear right" />
+          {outfitColor && (
+            <div className="head-bow">
+              <div className="head-bow-dot" />
+            </div>
+          )}
           <div className="panda-face">
             <div className="panda-face-white" />
             <div className="panda-eye-patch left" />

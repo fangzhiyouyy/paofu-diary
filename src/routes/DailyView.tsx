@@ -74,7 +74,7 @@ export function DailyView() {
     }}>
       {/* 顶部：日期 + 阶段 */}
       <div style={{
-        padding: 'calc(6px + var(--safe-top)) 20px 0',
+        padding: 'calc(12px + var(--safe-top)) 20px 0',
         textAlign: 'center',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 4 }}>

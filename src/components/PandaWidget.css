@@ -55,6 +55,36 @@
 }
 .panda-ear.left { left: 0; }
 .panda-ear.right { right: 0; }
+
+/* 头顶蝴蝶结 */
+.head-bow {
+  position: absolute;
+  top: -2px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
+}
+.head-bow::before,
+.head-bow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 16px; height: 14px;
+  background: linear-gradient(135deg, var(--outfit-color, #C75B39), color-mix(in srgb, var(--outfit-color, #C75B39) 60%, #000));
+  border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+}
+.head-bow::before { left: -12px; transform: rotate(-30deg); }
+.head-bow::after { right: -12px; transform: rotate(30deg); }
+.head-bow-dot {
+  position: absolute;
+  top: 3px; left: 50%;
+  transform: translateX(-50%);
+  width: 7px; height: 7px;
+  background: radial-gradient(circle, #fff 0%, #ccc 100%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
 .panda-face-white {
   position: absolute;
   top: 36px; left: 50%; transform: translateX(-50%);
