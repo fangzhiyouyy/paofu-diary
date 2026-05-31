@@ -34,6 +34,7 @@ const SUBTYPES: Record<BehaviorType, { value: string; label: string }[]> = {
     { value: 'impulse', label: '😅 冲动消费' },
   ],
   exercise: [
+    { value: 'do', label: '❤️ Do' },
     { value: 'cardio', label: '🏃 跑步/有氧' },
     { value: 'yoga', label: '🧘 瑜伽/拉伸' },
     { value: 'walk', label: '🚶 散步' },

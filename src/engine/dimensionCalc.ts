@@ -58,6 +58,7 @@ export function calcBehaviorEffects(behavior: Omit<Behavior, 'id' | 'date' | 'ef
     // ====== 运动 ======
     case 'exercise':
       switch (subtype) {
+        case 'do':         Object.assign(e, { mood: 25, satiety: 5, sleep_quality: 15, energy: 10, happiness: 30, stress: -30, health: 15 }); break
         case 'cardio':     Object.assign(e, { health: 15, energy: -20, mood: 15, stress: -20 }); break
         case 'yoga':       Object.assign(e, { health: 10, energy: -5, mood: 10, stress: -25 }); break
         case 'walk':       Object.assign(e, { health: 8, energy: 5, mood: 12, stress: -15 }); break

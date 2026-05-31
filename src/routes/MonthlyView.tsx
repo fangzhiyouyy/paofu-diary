@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useCycleStore } from '../stores/cycleStore'
 import { useUIStore } from '../stores/uiStore'
 import { getMonthRecords } from '../db/dailyRepo'
+import { supabase } from '../db/supabase'
 import { PHASE_META } from '../types'
 import type { DailyRecord, CyclePhase } from '../types'
 
@@ -9,6 +10,7 @@ export function MonthlyView() {
   const { currentCycle, load } = useCycleStore()
   const { navigateToDate } = useUIStore()
   const [records, setRecords] = useState<DailyRecord[]>([])
+  const [doDays, setDoDays] = useState<Set<string>>(new Set())
   const [viewDate] = useState(() => {
     const d = new Date()
     return { year: d.getFullYear(), month: d.getMonth() + 1 }
@@ -17,6 +19,13 @@ export function MonthlyView() {
   useEffect(() => {
     load()
     getMonthRecords(viewDate.year, viewDate.month).then(setRecords)
+    // 查询本月有 "do" 行为的日期
+    const start = `${viewDate.year}-${String(viewDate.month).padStart(2,'0')}-01`
+    const end = `${viewDate.year}-${String(viewDate.month).padStart(2,'0')}-31`
+    supabase.from('behaviors').select('date').eq('subtype','do').gte('date',start).lte('date',end)
+      .then(({ data }) => {
+        if (data) setDoDays(new Set(data.map((b: {date:string}) => b.date)))
+      })
   }, [load, viewDate])
 
   const recordMap = new Map(records.map(r => [r.date, r]))
@@ -153,6 +162,14 @@ export function MonthlyView() {
                 )}
                 <span style={{ fontSize: 12 }}>{day}</span>
                 {/* 穿搭色点 */}
+                {doDays.has(dateStr) && (
+                  <span style={{
+                    position: 'absolute',
+                    top: 2, right: 3,
+                    fontSize: 10,
+                    lineHeight: 1,
+                  }}>❤️</span>
+                )}
                 {record?.outfit_color && (
                   <div style={{
                     width: 6,
