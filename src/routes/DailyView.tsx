@@ -7,6 +7,7 @@ import { StarChart } from '../components/StarChart'
 import { TimelineCard } from '../components/TimelineCard'
 import { BehaviorForm } from '../components/BehaviorForm'
 import { PhaseBadge } from '../components/PhaseBadge'
+import { FoodPicker } from '../components/FoodPicker'
 import { detectPhase } from '../engine/phaseDetector'
 import type { BehaviorType, CyclePhase } from '../types'
 import { DEFAULT_DIMENSIONS } from '../types'
@@ -18,6 +19,7 @@ export function DailyView() {
   const { currentCycle } = useCycleStore()
   const { themeColor, themeBgColor, targetDate, clearTargetDate } = useUIStore()
   const [showForm, setShowForm] = useState(false)
+  const [showFoodPicker, setShowFoodPicker] = useState(false)
   const [selectedDate, setSelectedDate] = useState(() => fmtDate(new Date()))
 
   // 响应月视图跳转
@@ -103,6 +105,30 @@ export function DailyView() {
           }}>▶</button>
         </div>
         <PhaseBadge phase={displayPhase} />
+
+        {/* 今天吃什么按钮 */}
+        {isToday && (
+          <button
+            onClick={() => setShowFoodPicker(true)}
+            style={{
+              marginTop: 8,
+              padding: '10px 24px',
+              border: '2px dashed var(--phase-color, #FF6B6B)',
+              borderRadius: 20,
+              background: 'var(--phase-bg, #FFF0F0)',
+              color: 'var(--phase-color, #FF6B6B)',
+              fontSize: 15,
+              fontWeight: 600,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              transition: 'all 0.2s',
+            }}
+          >
+            🍜 今天吃什么
+          </button>
+        )}
       </div>
 
       {/* 泡芙动画 */}
@@ -230,6 +256,11 @@ export function DailyView() {
             onClose={() => setShowForm(false)}
           />
         </>
+      )}
+
+      {/* 今天吃什么弹窗 */}
+      {showFoodPicker && (
+        <FoodPicker onClose={() => setShowFoodPicker(false)} />
       )}
     </div>
   )
